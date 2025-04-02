@@ -1,0 +1,14 @@
+# python stuff
+**__pycache__/
+.ipynb_checkpoints/
+.history
+# gcp creds
+**/*.auth/*
+#terraform 
+*.tfstate
+*.tfstate.*
+**.terraform
+**.terraform.lock.*
+
+**logs/
+**.env
