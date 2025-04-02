@@ -13,7 +13,8 @@
 		},
 		"ghcr.io/devcontainers/features/python:1": {
 			"version": "3.11"
-		}
+		},
+		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -23,7 +24,7 @@
 	"postCreateCommand": "pip install --user -r .devcontainer/requirements.txt",
 
 	// Load environment variables from the .env file in the workspace 
-	"postStartCommand": "if ! grep -q 'export $(grep -v '^#' /workspaces/emr_data_pipeline/.env | xargs)' ~/.bashrc; then echo 'export $(grep -v '^#' /workspaces/emr_data_pipeline/.env | xargs)' >> ~/.bashrc; fi",
+	"postStartCommand": ". /workspaces/emr_data_pipeline/.devcontainer/postStartCommand.sh",
 	
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	"remoteUser": "vscode",
@@ -57,8 +58,6 @@
 				"tasks.statusbar.default.hide": true,
 				"terminal.integrated.tabs.defaultIcon": "terminal-powershell",
 				"terminal.integrated.tabs.defaultColor": "terminal.ansiBlue",
-				"workbench.colorTheme": "GitHub Dark Dimmed",
-				"workbench.iconTheme": "material-icon-theme",
 				//pasted images will go into resources folder
 				"markdown.copyFiles.destination": {
 					"*.md": "${documentWorkspaceFolder}/_resources/${documentRelativeFilePath}/${fileName}"
