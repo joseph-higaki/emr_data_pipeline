@@ -19,7 +19,7 @@ variable "location" {
 variable "credentials_file" {
   description = "Path to the Google Cloud service account credentials file"
   type        = string
-  default     = "/workspaces/emr_data_pipeline/.gcp.auth/emr-data-pipeline-terraform-infra-2a7e3664fe29.json"
+  default     = "/workspaces/emr_data_pipeline/.gcp.auth/terraform-infra/emr-data-pipeline-terraform-infra-2a7e3664fe29.json"
 }
 
 variable "dataset_id" {
