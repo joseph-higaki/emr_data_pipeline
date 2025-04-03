@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: dummy_source        
+    database: emr-data-pipeline
+    schema: emr_analytics
+    tables:
+      - name: dummy_table
