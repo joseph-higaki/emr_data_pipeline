@@ -74,7 +74,7 @@ x-airflow-common:
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
     # Setting up Google Cloud
-    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/credentials/airflow-ingestion/google_credentials.json    
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE}
     # not sure what it does, I will not enable it until it fails
     #-- AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/opt/airflow/credentials/google_credentials.json'
     #
@@ -87,11 +87,11 @@ x-airflow-common:
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/dags:/opt/airflow/dags    
     #-- - ${AIRFLOW_PROJ_DIR:-.}/src:/opt/src
-    #- ${AIRFLOW_PROJ_DIR:-.}/airflow/logs:/opt/airflow/logs
-    #- ${AIRFLOW_PROJ_DIR:-.}/airflow/config:/opt/airflow/config
-    #- ${AIRFLOW_PROJ_DIR:-.}/airflow/plugins:/opt/airflow/plugins
+    - ${AIRFLOW_PROJ_DIR:-.}/airflow/logs:/opt/airflow/logs
+    - ${AIRFLOW_PROJ_DIR:-.}/airflow/config:/opt/airflow/config
+    - ${AIRFLOW_PROJ_DIR:-.}/airflow/plugins:/opt/airflow/plugins
     #Setting up application / airflow specific cloud credentials
-    - ${AIRFLOW_PROJ_DIR:-.}/airflow/credentials/airflow-ingestion:/opt/airflow/credentials/airflow-ingestion:ro
+    - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/opt/airflow/credentials/airflow-ingestion:ro
     # requirements base and task specific
   #--  - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
   user: "${AIRFLOW_UID:-50000}:0"
@@ -197,13 +197,10 @@ services:
           echo "   https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#before-you-begin"
           echo
         fi
-        echo mkdir -p /opt/airflow/logs /opt/airflow/plugins /opt/airflow/config
-        echo chown -R "${AIRFLOW_UID}:0" /opt/airflow/logs /opt/airflow/plugins /opt/airflow/config
+        echo mkdir -p /sources/logs /sources/dags /sources/plugins
+        echo chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
         exec /entrypoint airflow version
     # yamllint enable rule:line-length
-    #         echo mkdir -p /sources/logs /sources/dags /sources/plugins        
-
-    #    echo chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
 
     environment:
       <<: *airflow-common-env
@@ -213,8 +210,8 @@ services:
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}      
       _PIP_ADDITIONAL_REQUIREMENTS: ''
     user: "${AIRFLOW_UID}:0"
-    volumes:
-      - ${AIRFLOW_PROJ_DIR:-.}/airflow:/opt/airflow
+#    volumes:
+#      - ${AIRFLOW_PROJ_DIR:-.}/airflow:/opt/airflow
 
   airflow-cli:
     <<: *airflow-common
