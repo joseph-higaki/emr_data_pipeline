@@ -92,6 +92,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/plugins:/opt/airflow/plugins
     #Setting up application / airflow specific cloud credentials
     - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/opt/airflow/credentials/airflow-ingestion:ro
+    - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_DBT_CREDENTIALS_PATH}:/opt/airflow/credentials/dbt-analytics:ro
     # requirements base and task specific
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
   user: "${AIRFLOW_UID:-50000}:0"

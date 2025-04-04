@@ -5,6 +5,5 @@ create a .env within the dbt project so that dbt power user extension can find t
 
 DAG is recognized
 
+make dbt profiles to read env variables, so that it runs from airflow and local (power user extension)
 
-  raise AirflowNotFoundException(f"The conn_id `{conn_id}` isn't defined")
-airflow.exceptions.AirflowNotFoundException: The conn_id `my_google_cloud_platform_connection` isn't defined

@@ -4,7 +4,8 @@ emr_analytics:
       dataset: emr_analytics
       job_execution_timeout_seconds: 400
       job_retries: 1
-      keyfile: /workspaces/emr_data_pipeline/.gcp.auth/emr-data-pipeline-dbt-analytics-109d6cef0063.json
+      #keyfile: /workspaces/emr_data_pipeline/.gcp.auth/emr-data-pipeline-dbt-analytics-109d6cef0063.json
+      keyfile: /opt/airflow/credentials/dbt-analytics/emr-data-pipeline-dbt-analytics-109d6cef0063.json
       location: EU
       method: service-account
       priority: interactive
