@@ -93,7 +93,7 @@ x-airflow-common:
     #Setting up application / airflow specific cloud credentials
     - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/opt/airflow/credentials/airflow-ingestion:ro
     # requirements base and task specific
-  #--  - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
+    - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on    
