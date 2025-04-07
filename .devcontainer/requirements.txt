@@ -2,4 +2,5 @@ dbt-core
 dbt-bigquery
 apache-airflow
 apache-airflow-providers-google
+apache-airflow-providers-docker
 astronomer-cosmos

@@ -1,1 +1,2 @@
 astronomer-cosmos
+apache-airflow-providers-docker

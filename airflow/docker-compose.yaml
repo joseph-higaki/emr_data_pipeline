@@ -95,6 +95,8 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_DBT_CREDENTIALS_PATH}:/opt/airflow/credentials/dbt-analytics:ro
     # requirements base and task specific
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
+    # enable Docker Operator Communications
+    - ${AIRFLOW_PROJ_DIR:-.}/airflow/var/run/docker.sock:/var/run/docker.sock:rw
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on    
@@ -115,7 +117,7 @@ services:
       interval: 10s
       retries: 5
       start_period: 5s
-    restart: always
+    restart: always    
   
   airflow-webserver:
     <<: *airflow-common
@@ -226,3 +228,17 @@ services:
       - bash
       - -c
       - airflow
+
+  emr_ingestor:
+    build:
+      context: ..
+      dockerfile: scripts/emr_ingestor/Dockerfile  
+    restart: "no"  # Don't restart automatically as it will be triggered by Airflow
+    environment:
+      - INGESTION_GCS_BUCKET_DESTINATION=${INGESTION_GCS_BUCKET_DESTINATION}
+      - INGESTION_GCS_BUCKET_DESTINATION_PREFIX=${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE}
+    volumes:
+      - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro
+    
+    # Command intentionally left empty as we'll use DockerOperator to run it

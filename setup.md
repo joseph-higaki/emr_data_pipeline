@@ -7,3 +7,6 @@ DAG is recognized
 
 make dbt profiles to read env variables, so that it runs from airflow and local (power user extension)
 
+
+
+Stuck trying to make airflow execute Docker Operator
