@@ -19,7 +19,6 @@ import logging
 import pandas as pd
 from datetime import datetime
 from google.cloud import storage
-from google.oauth2 import service_account
 import tempfile
 
 # Configure logging
@@ -29,32 +28,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger('emr_ingestion')
 
-# def setup_gcp_credentials():
-#     """Set up GCP credentials from environment variables or default paths"""
-#     creds_path = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
-    
-#     if not creds_path:
-#         # Check common locations
-#         potential_paths = [
-#             '/app/credentials/google_credentials.json',
-#             '/opt/airflow/credentials/google_credentials.json',
-#             './.gcp.auth/emr-data-pipeline-airflow-ingestion-573bacba9da7.json'
-#         ]
-        
-#         for path in potential_paths:
-#             if os.path.exists(path):
-#                 creds_path = path
-#                 break
-    
-#     if not creds_path or not os.path.exists(creds_path):
-#         logger.error("GCP credentials not found!")
-#         sys.exit(1)
-    
-#     logger.info(f"Using GCP credentials from: {creds_path}")
-#     return service_account.Credentials.from_service_account_file(creds_path)
-
-def create_dummy_patient_data():
-    """Create a dummy patient dataframe with 'hello world' message"""
+def read_emr_patient_data(source_url: str): 
+    """Read EMR patient data
+    EMR systems would typically provide data in FHIR format or CSV.
+    Ideally set up in an object storage like GCS or S3.
+    For now, we are downloading CSVs from synthetichealthdata.com.
+    https://mitre.box.com/shared/static/aw9po06ypfb9hrau4jamtvtz0e5ziucz.zip
+    """
+    # This is a placeholder for actual data ingestion logic
     logger.info("Creating dummy patient data")
     return pd.DataFrame({
         'message': ['hello world']
@@ -86,10 +67,9 @@ def upload_to_gcs(df, bucket_name, destination_path):
 def main():
     """Main entry point for the EMR data ingestion process"""
     # Get configuration from environment variables
-    bucket_name = os.environ.get('INGESTION_GCS_BUCKET_DESTINATION')
-    #bucket_name = "emr-data-pipeline-emr_analytics"
-    destination_prefix = os.environ.get('INGESTION_GCS_BUCKET_DESTINATION_PREFIX')
-    #destination_prefix = 'emr/raw' 
+    source_url = os.environ.get('INGESTION_SYNTHEA_URL_SOURCE')
+    bucket_name = os.environ.get('INGESTION_GCS_BUCKET_DESTINATION')    
+    destination_prefix = os.environ.get('INGESTION_GCS_BUCKET_DESTINATION_PREFIX')    
     
     # For debugging
     debug_mode = os.environ.get('DEBUG', 'false').lower() == 'true'
@@ -99,7 +79,7 @@ def main():
     
     try:
         # Create dummy patient data
-        df = create_dummy_patient_data()
+        df = read_emr_patient_data(source_url)
         
         # Upload to GCS
         output_path = upload_to_gcs(df, bucket_name, destination_prefix)
@@ -112,4 +92,4 @@ def main():
         return 1
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

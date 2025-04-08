@@ -10,12 +10,8 @@ if [ -f "$ENV_FILE" ]; then
   echo "Loading environment variables from $ENV_FILE"
   export $(grep -v '^#' "$ENV_FILE" | xargs)
 else
-  echo "Warning: .env file not found at $ENV_FILE"
-  # Set default values if .env file is not found
-#   export GCS_BUCKET="emr-data-pipeline-emr_analytics"
-#   export GCS_DESTINATION_PREFIX="emr/raw"
-#   export ENVIRONMENT="development"
-    exit
+  echo "Error: .env file not found at $ENV_FILE"
+  exit
 fi
 
 # Set up credentials and Python path
@@ -28,6 +24,7 @@ export PYTHONPATH=${PYTHONPATH}:$PROJECT_DIR
 
 # Display configuration
 echo "=== Configuration ==="
+echo "INGESTION_SYNTHEA_URL_SOURCE: $INGESTION_SYNTHEA_URL_SOURCE"
 echo "INGESTION_GCS_BUCKET_DESTINATION: $INGESTION_GCS_BUCKET_DESTINATION"
 echo "INGESTION_GCS_BUCKET_DESTINATION_PREFIX: $INGESTION_GCS_BUCKET_DESTINATION_PREFIX"
 #echo "ENVIRONMENT: $ENVIRONMENT"
