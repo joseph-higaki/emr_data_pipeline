@@ -1,10 +1,9 @@
-FROM python:3.9-slim 
-# go 11
+FROM python:3.9-slim
 
 # Install necessary packages
-RUN pip install --no-cache-dir \
-    google-cloud-storage \
-    pandas 
+# RUN pip install --no-cache-dir \
+#     google-cloud-storage \
+#     pandas 
     # pyarrow \    
     # pytest
 
@@ -14,9 +13,9 @@ WORKDIR /app
 
 # Copy ingestion script and utilities
 # Using paths relative to the project root (build context in docker-compose)
-COPY scripts/emr_ingestor/*.py /app/
-COPY .gcp.auth/airflow-ingestion/google_credentials.json /app/credentials/google_credentials.json
-RUN mkdir -p /app/credentials
+#COPY scripts/emr_ingestor/*.py /app/
+#COPY .gcp.auth/airflow-ingestion/google_credentials.json /app/credentials/google_credentials.json
+#RUN mkdir -p /app/credentials
 
 # Credentials will be mounted at runtime via volume mount
 # No need to copy credentials in the Dockerfile

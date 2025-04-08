@@ -78,6 +78,8 @@ x-airflow-common:
     # not sure what it does, I will not enable it until it fails
     #-- AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/opt/airflow/credentials/google_credentials.json'
     #
+    INGESTION_GCS_BUCKET_DESTINATION: '${INGESTION_GCS_BUCKET_DESTINATION}'
+    INGESTION_GCS_BUCKET_DESTINATION_PREFIX: '${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}'
     #GCP_PROJECT_ID: '${GCP_PROJECT_ID}'
     #GCP_GCS_BUCKET: ${GCP_GCS_BUCKET}
     #GCP_BQ_DATASET: ${GCP_BQ_DATASET}
@@ -96,12 +98,14 @@ x-airflow-common:
     # requirements base and task specific
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
     # enable Docker Operator Communications
-    - ${AIRFLOW_PROJ_DIR:-.}/airflow/var/run/docker.sock:/var/run/docker.sock:rw
+    #- /var/run/docker.sock:/var/run/docker.sock:rw
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on    
     postgres:
       condition: service_healthy
+    docker-proxy:
+      condition: service_started
 
 services:
   postgres:
@@ -231,14 +235,28 @@ services:
 
   emr_ingestor:
     build:
-      context: ..
+      context: .. # if I don't change context It woould find the .env file in the airflow directory. But I would need to add ../ to the dockerfile path
       dockerfile: scripts/emr_ingestor/Dockerfile  
+    image: emr_ingestor:latest
+    container_name: emr_ingestor
     restart: "no"  # Don't restart automatically as it will be triggered by Airflow
     environment:
-      - INGESTION_GCS_BUCKET_DESTINATION=${INGESTION_GCS_BUCKET_DESTINATION}
-      - INGESTION_GCS_BUCKET_DESTINATION_PREFIX=${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE}
+      # - INGESTION_GCS_BUCKET_DESTINATION=${INGESTION_GCS_BUCKET_DESTINATION}
+      # - INGESTION_GCS_BUCKET_DESTINATION_PREFIX=${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE} # consider removing, already in the docker file
     volumes:
-      - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro
+      - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro # consider removing, already in the docker file
     
     # Command intentionally left empty as we'll use DockerOperator to run it
+
+  dummmy_service:
+    build:
+      context: ..
+      dockerfile: scripts/synthea_generator/Dockerfile    
+  docker-proxy:
+    image: alpine/socat
+    command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "2375:2375"

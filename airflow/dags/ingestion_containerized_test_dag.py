@@ -34,16 +34,16 @@ with DAG(
     # Run containerized ingestion process
     ingest_data = DockerOperator(
         task_id='ingest_emr_data',
-        image='emr-ingestion:latest',  # Your ingestion container image
+        image='emr_ingestor:latest',  # Your ingestion container image
         api_version='auto',
         auto_remove=True,
-        # environment={
-        #     'GCS_BUCKET': GCS_BUCKET,
-        #     'GCS_DESTINATION_PREFIX': 'emr/raw',
+        environment={
+             'INGESTION_GCS_BUCKET_DESTINATION': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION'),
+             'INGESTION_GCS_BUCKET_DESTINATION_PREFIX': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION_PREFIX'),
         #     'DEBUG': 'false',
-        # },
+        },
         # volumes=[f"{GOOGLE_CREDENTIALS_PATH}:/app/credentials/google_credentials.json:ro"],
-        docker_url='unix://var/run/docker.sock',
+        docker_url='tcp://docker-proxy:2375',
         network_mode='bridge',
         xcom_all=True,  # Capture all container output
         command='python /app/emr_ingestor.py',  # Explicitly call your script
