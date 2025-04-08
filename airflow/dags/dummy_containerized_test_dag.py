@@ -41,7 +41,7 @@ with DAG(
         docker_url='tcp://docker-proxy:2375',
         # network_mode='bridge',
         # xcom_all=True,  # Capture all container output
-        # command='python /app/emr_ingestor.py',  # Explicitly call your script
+        # command='python /app/emr_ingestion.py',  # Explicitly call your script
     )
 
     hello_task >> dummy_hello_world_task

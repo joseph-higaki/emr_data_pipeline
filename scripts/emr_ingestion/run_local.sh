@@ -35,7 +35,7 @@ echo "===================="
 
 # Run the ingestion script
 echo "Running EMR ingestion script locally..."
-python $PROJECT_DIR/scripts/emr_ingestor/emr_ingestor.py
+python $PROJECT_DIR/scripts/emr_ingestion/emr_ingestion.py
 
 # Display exit code
 EXIT_CODE=$?

@@ -27,7 +27,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-logger = logging.getLogger('emr_ingestor')
+logger = logging.getLogger('emr_ingestion')
 
 # def setup_gcp_credentials():
 #     """Set up GCP credentials from environment variables or default paths"""

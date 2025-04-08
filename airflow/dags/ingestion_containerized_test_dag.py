@@ -34,7 +34,7 @@ with DAG(
     # Run containerized ingestion process
     ingest_data = DockerOperator(
         task_id='ingest_emr_data',
-        image='emr_ingestor:latest',  # Your ingestion container image
+        image='emr_ingestion:latest',  # Your ingestion container image
         api_version='auto',
         auto_remove=True,
         environment={
@@ -46,7 +46,7 @@ with DAG(
         docker_url='tcp://docker-proxy:2375',
         network_mode='bridge',
         xcom_all=True,  # Capture all container output
-        command='python /app/emr_ingestor.py',  # Explicitly call your script
+        command='python /app/emr_ingestion.py',  # Explicitly call your script
     )
 
     hello_task >> ingest_data 

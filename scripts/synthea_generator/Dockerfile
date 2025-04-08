@@ -13,7 +13,7 @@ WORKDIR /app
 
 # Copy ingestion script and utilities
 # Using paths relative to the project root (build context in docker-compose)
-#COPY scripts/emr_ingestor/*.py /app/
+#COPY scripts/emr_ingestion/*.py /app/
 #COPY .gcp.auth/airflow-ingestion/google_credentials.json /app/credentials/google_credentials.json
 #RUN mkdir -p /app/credentials
 
@@ -25,4 +25,4 @@ ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/google_credentials.json
 ENV PYTHONPATH=/app
 
 # Set entrypoint to run the ingestion script
-#ENTRYPOINT ["python", "emr_ingestor.py"]
+#ENTRYPOINT ["python", "emr_ingestion.py"]

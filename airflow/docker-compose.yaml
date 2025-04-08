@@ -109,13 +109,14 @@ x-airflow-common:
 
 services:
   postgres:
+    container_name: airflow-postgres
     image: postgres:13
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
-      - ${AIRFLOW_PROJ_DIR:-.}:/airflow_postgresql_data:/var/lib/postgresql/data
+      - ${AIRFLOW_PROJ_DIR:-.}/airflow/airflow_postgresql_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
@@ -125,6 +126,7 @@ services:
   
   airflow-webserver:
     <<: *airflow-common
+    container_name: airflow-webserver
     command: webserver
     ports:
       - "8080:8080"
@@ -142,6 +144,7 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
+    container_name: airflow-scheduler
     command: scheduler
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
@@ -217,8 +220,6 @@ services:
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}      
       _PIP_ADDITIONAL_REQUIREMENTS: ''
     user: "${AIRFLOW_UID}:0"
-#    volumes:
-#      - ${AIRFLOW_PROJ_DIR:-.}/airflow:/opt/airflow
 
   airflow-cli:
     <<: *airflow-common
@@ -233,19 +234,19 @@ services:
       - -c
       - airflow
 
-  emr_ingestor:
+  emr_ingestion:
+    container_name: emr_ingestion
     build:
       context: .. # if I don't change context It woould find the .env file in the airflow directory. But I would need to add ../ to the dockerfile path
-      dockerfile: scripts/emr_ingestor/Dockerfile  
-    image: emr_ingestor:latest
-    container_name: emr_ingestor
+      dockerfile: scripts/emr_ingestion/Dockerfile  
+    image: emr_ingestion:latest    
     restart: "no"  # Don't restart automatically as it will be triggered by Airflow
-    environment:
+    #environment:
       # - INGESTION_GCS_BUCKET_DESTINATION=${INGESTION_GCS_BUCKET_DESTINATION}
       # - INGESTION_GCS_BUCKET_DESTINATION_PREFIX=${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE} # consider removing, already in the docker file
-    volumes:
-      - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro # consider removing, already in the docker file
+      # - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE} # consider removing, already in the docker file
+    #volumes:
+      # - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro # consider removing, already in the docker file
     
     # Command intentionally left empty as we'll use DockerOperator to run it
 
@@ -254,6 +255,7 @@ services:
       context: ..
       dockerfile: scripts/synthea_generator/Dockerfile    
   docker-proxy:
+    container_name: docker-proxy-socat
     image: alpine/socat
     command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
     volumes:
