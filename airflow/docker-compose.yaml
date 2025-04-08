@@ -78,8 +78,15 @@ x-airflow-common:
     # not sure what it does, I will not enable it until it fails
     #-- AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/opt/airflow/credentials/google_credentials.json'
     #
+    INGESTION_SYNTHEA_URL_SOURCE: '${INGESTION_SYNTHEA_URL_SOURCE}'
     INGESTION_GCS_BUCKET_DESTINATION: '${INGESTION_GCS_BUCKET_DESTINATION}'
     INGESTION_GCS_BUCKET_DESTINATION_PREFIX: '${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}'
+    TRANSFORMATION_GCS_BUCKET_SOURCE: ${TRANSFORMATION_GCS_BUCKET_SOURCE}
+    TRANSFORMATION_GCS_BUCKET_SOURCE_PREFIX: ${TRANSFORMATION_GCS_BUCKET_SOURCE_PREFIX}
+    TRANSFORMATION_GCS_BUCKET_DESTINATION: ${TRANSFORMATION_GCS_BUCKET_DESTINATION}
+    TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX: ${TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX}
+
+
     #GCP_PROJECT_ID: '${GCP_PROJECT_ID}'
     #GCP_GCS_BUCKET: ${GCP_GCS_BUCKET}
     #GCP_BQ_DATASET: ${GCP_BQ_DATASET}
@@ -249,8 +256,17 @@ services:
       # - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro # consider removing, already in the docker file
     
     # Command intentionally left empty as we'll use DockerOperator to run it
+  emr_transformation:
+    container_name: emr_transformation
+    build:
+      context: .. # if I don't change context It woould find the .env file in the airflow directory. But I would need to add ../ to the dockerfile path
+      dockerfile: scripts/emr_transformation/Dockerfile  
+    image: emr_transformation:latest    
+    restart: "no"  # Don't restart automatically as it will be triggered by Airflow
 
-  dummmy_service:
+
+
+  emr_generation:
     build:
       context: ..
       dockerfile: scripts/synthea_generator/Dockerfile    

@@ -25,22 +25,23 @@ export PYTHONPATH=${PYTHONPATH}:$PROJECT_DIR
 
 # Display configuration
 echo "=== Configuration ==="
-echo "INGESTION_SYNTHEA_URL_SOURCE: $INGESTION_SYNTHEA_URL_SOURCE"
-echo "INGESTION_GCS_BUCKET_DESTINATION: $INGESTION_GCS_BUCKET_DESTINATION"
-echo "INGESTION_GCS_BUCKET_DESTINATION_PREFIX: $INGESTION_GCS_BUCKET_DESTINATION_PREFIX"
-#echo "ENVIRONMENT: $ENVIRONMENT"
-echo "===================="
+echo "TRANSFORMATION_GCS_BUCKET_SOURCE: $TRANSFORMATION_GCS_BUCKET_SOURCE"
+echo "TRANSFORMATION_GCS_BUCKET_SOURCE_PREFIX: $TRANSFORMATION_GCS_BUCKET_SOURCE_PREFIX"    
+echo "TRANSFORMATION_GCS_BUCKET_DESTINATION: $TRANSFORMATION_GCS_BUCKET_DESTINATION"  
+echo "TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX: $TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX"
+echo "DEBUG: $DEBUG"
+
 
 # Run the ingestion script
 echo "Running EMR ingestion script locally..."
-python $PROJECT_DIR/scripts/emr_ingestion/emr_ingestion.py
+python $PROJECT_DIR/scripts/emr_transformation/emr_transformation.py 
 
 # Display exit code
 EXIT_CODE=$?
 if [ $EXIT_CODE -eq 0 ]; then
-  echo "✅ Ingestion completed successfully!"
+  echo "✅ Transformation completed successfully!"
 else
-  echo "❌ Ingestion failed with exit code $EXIT_CODE"
+  echo "❌ Transformation failed with exit code $EXIT_CODE"
 fi
 
 exit $EXIT_CODE
