@@ -73,8 +73,8 @@ x-airflow-common:
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
-    # Setting up Google Cloud
-    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE}
+    # Setting up Google Cloud Credentials. This file was copied from the local machine through Dockerfile   
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/credentials/airflow-ingestion/google_credentials.json  
     # not sure what it does, I will not enable it until it fails
     #-- AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/opt/airflow/credentials/google_credentials.json'
     #
@@ -99,9 +99,6 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/plugins:/opt/airflow/plugins
-    #Setting up application / airflow specific cloud credentials
-    - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/opt/airflow/credentials/airflow-ingestion:ro
-    - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_DBT_CREDENTIALS_PATH}:/opt/airflow/credentials/dbt-analytics:ro
     # requirements base and task specific
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
     # enable Docker Operator Communications
@@ -248,12 +245,6 @@ services:
       dockerfile: scripts/emr_ingestion/Dockerfile  
     image: emr_ingestion:latest    
     restart: "no"  # Don't restart automatically as it will be triggered by Airflow
-    #environment:
-      # - INGESTION_GCS_BUCKET_DESTINATION=${INGESTION_GCS_BUCKET_DESTINATION}
-      # - INGESTION_GCS_BUCKET_DESTINATION_PREFIX=${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}
-      # - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/airflow-ingestion/${AIRFLOW_INGESTION_CREDENTIALS_FILE} # consider removing, already in the docker file
-    #volumes:
-      # - ${AIRFLOW_PROJ_DIR:-.}/${AIRFLOW_INGESTION_CREDENTIALS_PATH}:/app/credentials/airflow-ingestion:ro # consider removing, already in the docker file
     
     # Command intentionally left empty as we'll use DockerOperator to run it
   emr_transformation:
