@@ -1,15 +1,14 @@
 emr_analytics:
   outputs:
     dev:
-      dataset: emr_analytics
-      job_execution_timeout_seconds: 400
-      job_retries: 1
-      #keyfile: /workspaces/emr_data_pipeline/.gcp.auth/emr-data-pipeline-dbt-analytics-109d6cef0063.json
-      keyfile: /opt/airflow/credentials/dbt-analytics/emr-data-pipeline-dbt-analytics-109d6cef0063.json
-      location: EU
-      method: service-account
-      priority: interactive
-      project: emr-data-pipeline # need env variable
-      threads: 1
       type: bigquery
+      project: "{{ env_var('ANALYTICS_BQ_PROJECT_ID') }}" 
+      dataset: "{{ env_var('ANALYTICS_BQ_DATASET') }}" 
+      job_execution_timeout_seconds: 400
+      job_retries: 1      
+      keyfile: "{{ env_var('DBT_DATABASE_CREDENTIALS') }}"
+      location: EU # need env variable
+      method: service-account
+      priority: interactive      
+      threads: 1      
   target: dev
