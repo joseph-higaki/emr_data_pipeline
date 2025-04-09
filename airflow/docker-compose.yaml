@@ -52,7 +52,9 @@ x-airflow-common:
   # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
   # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
   #image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.2}
-  build: .
+  build: 
+    context: ..
+    dockerfile: /workspaces/emr_data_pipeline/airflow/Dockerfile    
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
@@ -75,9 +77,10 @@ x-airflow-common:
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
     # Setting up Google Cloud Credentials. This file was copied from the local machine through Dockerfile   
     GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/credentials/airflow-ingestion/google_credentials.json  
+    # Setting up Google Cloud Credentials for dbt Analytics. This file was copied from the local machine through Dockerfile
+    DBT_DATABASE_CREDENTIALS: /opt/airflow/credentials/dbt-analytics/google_credentials.json
     # not sure what it does, I will not enable it until it fails
-    #-- AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/opt/airflow/credentials/google_credentials.json'
-    #
+    #-- AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/opt/airflow/credentials/google_credentials.json'    
     INGESTION_SYNTHEA_URL_SOURCE: '${INGESTION_SYNTHEA_URL_SOURCE}'
     INGESTION_GCS_BUCKET_DESTINATION: '${INGESTION_GCS_BUCKET_DESTINATION}'
     INGESTION_GCS_BUCKET_DESTINATION_PREFIX: '${INGESTION_GCS_BUCKET_DESTINATION_PREFIX}'
@@ -86,13 +89,8 @@ x-airflow-common:
     TRANSFORMATION_GCS_BUCKET_DESTINATION: ${TRANSFORMATION_GCS_BUCKET_DESTINATION}
     TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX: ${TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX}
 
-
-    #GCP_PROJECT_ID: '${GCP_PROJECT_ID}'
-    #GCP_GCS_BUCKET: ${GCP_GCS_BUCKET}
-    #GCP_BQ_DATASET: ${GCP_BQ_DATASET}
-  #-- env_file:
-#--     - .env
-#--     - airflow.env
+    ANALYTICS_BQ_PROJECT_ID: '${ANALYTICS_BQ_PROJECT_ID}'
+    ANALYTICS_BQ_DATASET: '${ANALYTICS_BQ_DATASET}'    
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/dags:/opt/airflow/dags    
     #-- - ${AIRFLOW_PROJ_DIR:-.}/src:/opt/src
@@ -101,6 +99,9 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/plugins:/opt/airflow/plugins
     # requirements base and task specific
     - ${AIRFLOW_PROJ_DIR:-.}/airflow/requirements:/opt/airflow/requirements
+    #- ${AIRFLOW_INGESTION_CREDENTIALS_FILEPATH}:/opt/airflow/credentials/airflow-ingestion/google_credentials.json
+    #- ${AIRFLOW_DBT_CREDENTIALS_FILEPATH}:/opt/airflow/credentials/dbt-analytics/google_credentials.json
+    
     # enable Docker Operator Communications
     #- /var/run/docker.sock:/var/run/docker.sock:rw
   user: "${AIRFLOW_UID:-50000}:0"
@@ -114,7 +115,7 @@ x-airflow-common:
 services:
   postgres:
     container_name: airflow-postgres
-    image: postgres:13
+    image: postgres:13    
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
