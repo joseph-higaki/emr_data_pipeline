@@ -28,30 +28,29 @@ EXECUTION_CONFIG=ExecutionConfig(
     schedule_interval="@daily",
     start_date=datetime(2024, 4, 1),
     catchup=False,
-    dag_id="emr_analytics_pipeline_dag",
-    default_args={"retries": 2},    
+    dag_id="emr_analytics_pipeline_dag"       
 )
 def emr_analytics_pipeline_dag():
     hello = EmptyOperator(task_id="hello_task")
 
     generation = EmptyOperator(task_id="generation_task")
 
-    ingestion = DockerOperator(
-        task_id='ingestion_task',
-        image='emr_ingestion:latest',  # Your ingestion container image
-        api_version='auto',
-        auto_remove=True,
-        environment={
-                'INGESTION_SYNTHEA_URL_SOURCE': os.environ.get('INGESTION_SYNTHEA_URL_SOURCE'),
-                'INGESTION_GCS_BUCKET_DESTINATION': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION'),
-                'INGESTION_GCS_BUCKET_DESTINATION_PREFIX': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION_PREFIX'),
-                'DEBUG': 'true',
-        },
-        docker_url='tcp://docker-proxy:2375',
-        network_mode='bridge',
-        xcom_all=True,  # Capture all container output
-        command='python /app/emr_ingestion.py'  # Explicitly call your script
-    )
+    # ingestion = DockerOperator(
+    #     task_id='ingestion_task',
+    #     image='emr_ingestion:latest',  # Your ingestion container image
+    #     api_version='auto',
+    #     auto_remove=True,
+    #     environment={
+    #             'INGESTION_SYNTHEA_URL_SOURCE': os.environ.get('INGESTION_SYNTHEA_URL_SOURCE'),
+    #             'INGESTION_GCS_BUCKET_DESTINATION': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION'),
+    #             'INGESTION_GCS_BUCKET_DESTINATION_PREFIX': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION_PREFIX'),
+    #             'DEBUG': 'true',
+    #     },
+    #     docker_url='tcp://docker-proxy:2375',
+    #     network_mode='bridge',
+    #     xcom_all=True,  # Capture all container output
+    #     command='python /app/emr_ingestion.py'  # Explicitly call your script
+    # )
 
     transformation = DockerOperator(
         task_id='transformation_task',
@@ -91,7 +90,9 @@ def emr_analytics_pipeline_dag():
 
     post_dbt_task = EmptyOperator(task_id="post_dbt_task")
 
-    hello >> generation >> ingestion >> transformation >>  dbt_stage_external_sources >> dbt_run >> post_dbt_task 
+    # hello >> generation >> 
+    #ingestion >> 
+    transformation >>  dbt_stage_external_sources >> dbt_run >> post_dbt_task 
     #create_external_table >> 
     
 
