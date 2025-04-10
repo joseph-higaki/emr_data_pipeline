@@ -17,6 +17,7 @@ Usage:
 import os
 import sys
 import logging
+import uuid
 import pandas as pd
 from datetime import datetime
 from google.cloud import storage
@@ -195,7 +196,7 @@ def upload_parquet_to_gcs(
     bucket = client.bucket(dest_bucket_name)
     
     # Define destination path with partitioning
-    dest_path = f"{dest_prefix}/{entity_name}/ingested_at={ingested_at}/{entity_name}.parquet"
+    dest_path = f"{dest_prefix}/{entity_name}/ingested_at={ingested_at}/{entity_name}_{uuid.uuid4().hex}.parquet"
     
     # Create a temporary file and upload it
     with tempfile.NamedTemporaryFile(suffix='.parquet') as temp_file:
