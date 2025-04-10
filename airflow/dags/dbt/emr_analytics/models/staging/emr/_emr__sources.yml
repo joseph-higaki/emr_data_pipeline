@@ -8,9 +8,9 @@ sources:
       - name: raw_patients
         description: "Raw patient data from Synthea in GCS"
         external:
-          location: "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/*"
+          location: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/patients/*"
           options:
             format: "PARQUET"
-            hive_partition_uri_prefix: "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/"
+            hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/patients/"
             uris:
-              - "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/*"
+              - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/patients/*"

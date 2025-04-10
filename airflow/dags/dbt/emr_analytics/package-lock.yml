@@ -1,4 +1,8 @@
 packages:
   - package: dbt-labs/dbt_external_tables
     version: 0.11.1
-sha1_hash: 8ebd9cc033447f40dc39aff38d75f69f380e8000
+  - package: metaplane/dbt_expectations
+    version: 0.10.8
+  - package: godatadriven/dbt_date
+    version: 0.11.0
+sha1_hash: 8cbe903169b66525c4020a3a210a6f7baad741c4
