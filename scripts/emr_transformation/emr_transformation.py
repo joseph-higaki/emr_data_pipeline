@@ -81,6 +81,107 @@ def validate_timestamp(timestamp: str) -> bool:
         return True
     except ValueError:
         return False
+    
+def get_processed_timestamps(dest_bucket: str, dest_prefix: str) -> Dict[str, str]:
+    """
+    Retrieves the processed timestamps from a metadata file in GCS.
+    The metadata file contains a list of ingested_at and transformed_at timestamp pairs.
+    
+    Args:
+        dest_bucket: Destination GCS bucket name
+        dest_prefix: Destination prefix in the bucket
+        
+    Returns:
+        Dictionary mapping ingested_at timestamps to transformed_at timestamps
+    """
+    metadata_uri = f"gs://{dest_bucket}/{dest_prefix}/_metadata/processed_timestamps.csv"
+    processed_timestamps = {}
+    
+    try:
+        # Read the CSV directly from GCS
+        logger.info(f"Reading processed timestamps from metadata file {metadata_uri}")
+        df = pd.read_csv(
+            metadata_uri,
+            storage_options={"token": None}
+        )
+        
+        # Validate each timestamp and add it to the dictionary
+        for _, row in df.iterrows():
+            ingested_at = row['ingested_at']
+            transformed_at = row['transformed_at']
+            
+            if validate_timestamp(ingested_at) and validate_timestamp(transformed_at):
+                processed_timestamps[ingested_at] = transformed_at
+            else:
+                logger.warning(f"Invalid timestamp format in metadata file: {ingested_at} -> {transformed_at}")
+        
+        if processed_timestamps:
+            last_ingested_at = max(processed_timestamps.keys())
+            logger.info(f"Found {len(processed_timestamps)} processed timestamps. Last ingested_at: {last_ingested_at}")
+        
+    except Exception as e:
+        logger.info(f"No processed timestamps found (reason: {str(e)}), will process all batches")
+    
+    return processed_timestamps
+
+
+def save_processed_timestamp(dest_bucket: str, dest_prefix: str, ingested_at: str) -> None:
+    """
+    Saves a newly processed ingested_at timestamp to the metadata file in GCS.
+    Appends the new timestamp to the existing list.
+    
+    Args:
+        dest_bucket: Destination GCS bucket name
+        dest_prefix: Destination prefix in the bucket
+        ingested_at: Ingestion timestamp that was processed
+    """
+    if not validate_timestamp(ingested_at):
+        logger.error(f"Cannot save invalid ingested_at timestamp: {ingested_at}")
+        return
+    
+    # Get the current timestamp for transformed_at
+    transformed_at = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    metadata_uri = f"gs://{dest_bucket}/{dest_prefix}/_metadata/processed_timestamps.csv"
+    
+    # Create a dataframe for the new record
+    new_record = pd.DataFrame({
+        'ingested_at': [ingested_at],
+        'transformed_at': [transformed_at]
+    })
+    
+    try:
+        # Try to read existing records
+        existing_records = None
+        try:
+            existing_records = pd.read_csv(metadata_uri, storage_options={"token": None})
+        except Exception:
+            logger.info("No existing metadata file found, creating new one")
+            pass
+        
+        # Combine existing and new records
+        if existing_records is not None:
+            # Check if this ingested_at already exists
+            if ingested_at in existing_records['ingested_at'].values:
+                # Update the transformed_at timestamp
+                existing_records.loc[existing_records['ingested_at'] == ingested_at, 'transformed_at'] = transformed_at
+                combined_records = existing_records
+            else:
+                # Append the new record
+                combined_records = pd.concat([existing_records, new_record], ignore_index=True)
+        else:
+            combined_records = new_record
+        
+        # Write the combined records directly back to GCS
+        combined_records.to_csv(
+            metadata_uri,
+            index=False,
+            storage_options={"token": None}
+        )
+            
+        logger.info(f"Saved processed timestamp: ingested_at={ingested_at}, transformed_at={transformed_at}")
+        
+    except Exception as e:
+        logger.error(f"Error saving processed timestamp: {str(e)}")
 
 def list_input_files(bucket_name: str, prefix: str) -> Dict[str, List[str]]:
     """
@@ -134,7 +235,7 @@ def download_and_transform_file(
     entity_name: str
 ) -> Tuple[pd.DataFrame, str]:
     """
-    Downloads a CSV file from GCS, transforms it to a DataFrame.
+    Reads a CSV file directly from GCS and transforms it to a DataFrame.
     
     Args:
         source_bucket_name: Source GCS bucket name
@@ -144,29 +245,26 @@ def download_and_transform_file(
     Returns:
         Tuple of (transformed DataFrame, entity name)
     """
-    client = storage.Client()
-    bucket = client.bucket(source_bucket_name)
-    blob = bucket.blob(source_blob_path)
+    logger.info(f"Reading {source_blob_path} directly from GCS")
     
-    # Create a temporary file to download to
-    with tempfile.NamedTemporaryFile(suffix='.csv') as temp_file:
-        logger.info(f"Downloading {source_blob_path}")
-        blob.download_to_filename(temp_file.name)
-        
-        # Read CSV into DataFrame
-        df = pd.read_csv(
-            temp_file.name,
-            dtype=str,  # Read all columns as strings for safety
-            low_memory=False,  # Avoid dtype guessing issues
-            na_filter=False,  # Keep empty strings as is
-            keep_default_na=False,  # Do not convert empty strings to NaN
-        )
-        logger.info(f"Loaded {len(df)} rows from {source_blob_path}")
-        
-        # Add basic transformations here if needed
-        # For now, we're just converting format
-        
-        return df, entity_name
+    # Use pandas to read CSV directly from GCS
+    gcs_uri = f"gs://{source_bucket_name}/{source_blob_path}"
+    logger.info(f"Loading CSV from {gcs_uri}")
+    df = pd.read_csv(
+        gcs_uri,
+        dtype=str,  # Read all columns as strings for safety
+        low_memory=False,  # Avoid dtype guessing issues
+        na_filter=False,  # Keep empty strings as is
+        keep_default_na=False,  # Do not convert empty strings to NaN
+        storage_options={"token": None}  # Use default credentials
+    )
+    
+    logger.info(f"Loaded {len(df)} rows from {source_blob_path}")
+    
+    # Add basic transformations here if needed
+    # For now, we're just converting format
+    
+    return df, entity_name
 
 def upload_parquet_to_gcs(
     df: pd.DataFrame, 
@@ -275,7 +373,7 @@ def process_ingestion_batch(
             continue
             
         processed_entities.add(entity_name)
-        
+        logger.info(f"Processing file {file_path} for entity {entity_name}")
         # Process the file
         df, entity = download_and_transform_file(source_bucket, file_path, entity_name)
         
@@ -308,28 +406,52 @@ def main():
         logger.debug("Running in DEBUG mode")
     
     try:
+      # Get previously processed timestamps
+        processed_timestamps = get_processed_timestamps(dest_bucket, dest_prefix)
+        
+        # Find the latest ingested_at timestamp that was already processed
+        last_processed_ingested_at = ""
+        if processed_timestamps:
+            last_processed_ingested_at = max(processed_timestamps.keys())
+            logger.info(f"Last processed ingested_at timestamp: {last_processed_ingested_at}")
+        
         # List all input files organized by ingestion timestamp
         timestamp_files = list_input_files(source_bucket, source_prefix)
         
         if not timestamp_files:
             logger.warning(f"No input files found in gs://{source_bucket}/{source_prefix}")
             return 0
+        
+        # Filter and sort timestamps to only process new ones
+        sorted_timestamps = sorted(timestamp_files.keys())
+        if last_processed_ingested_at:
+            new_timestamps = [ts for ts in sorted_timestamps if ts > last_processed_ingested_at]
+            if not new_timestamps:
+                logger.info(f"No new data to process. Last processed ingested_at: {last_processed_ingested_at}")
+                return 0
+            logger.info(f"Processing {len(new_timestamps)} new ingested_at batches after {last_processed_ingested_at}")
+            sorted_timestamps = new_timestamps
             
         # Process each ingestion batch
         all_uploaded_files = []
         
-        for timestamp, file_paths in timestamp_files.items():
-            logger.info(f"Processing {len(file_paths)} files from timestamp {timestamp}")
+        for ingested_at in sorted_timestamps:
+            file_paths = timestamp_files[ingested_at]
+            logger.info(f"Processing {len(file_paths)} files from ingested_at={ingested_at}")
             
             try:
                 uploaded_files = process_ingestion_batch(
-                    source_bucket, timestamp, file_paths, 
+                    source_bucket, ingested_at, file_paths, 
                     dest_bucket, dest_prefix
                 )
                 
                 all_uploaded_files.extend(uploaded_files)
+                
+                # Save this ingested_at timestamp as processed
+                save_processed_timestamp(dest_bucket, dest_prefix, ingested_at)
+                
             except ValueError as e:
-                logger.error(f"Error processing batch with timestamp {timestamp}: {str(e)}")
+                logger.error(f"Error processing batch with ingested_at={ingested_at}: {str(e)}")
         
         # Print output paths for Airflow to capture
         logger.info(f"Uploaded {len(all_uploaded_files)} files")        
