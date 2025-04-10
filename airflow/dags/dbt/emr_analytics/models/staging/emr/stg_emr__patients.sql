@@ -15,14 +15,16 @@ renamed as (
 
         ---------- dates
         birthdate as birthdate_string,
-        cast(birthdate as date) as birth_date,
+        
+        {{ dbt.safe_cast("birthdate", api.Column.translate_type("date")) }} as birth_date,        
         deathdate as deathdate_string,
-        cast(deathdate as date) as death_date,
-
+        {{ dbt.safe_cast("deathdate", api.Column.translate_type("date")) }} as deathdate,        
+        
         ---------- text
         first as first_name,
         last as last_name,
-        ssn as social_security_number
+        ssn as social_security_number,
+        ingested_at
     from source
 
 )

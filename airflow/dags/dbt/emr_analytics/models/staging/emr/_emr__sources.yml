@@ -7,10 +7,10 @@ sources:
     tables:
       - name: raw_patients
         description: "Raw patient data from Synthea in GCS"
-        # external:
-        #   location: "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/*"
-        #   options:
-        #     format: "PARQUET"
-        #     hive_partition_uri_prefix: "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/"
-        #     uris:
-        #       - "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/*"
+        external:
+          location: "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/*"
+          options:
+            format: "PARQUET"
+            hive_partition_uri_prefix: "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/"
+            uris:
+              - "gs://emr-data-pipeline-emr_analytics/emr/staging/patients/*"

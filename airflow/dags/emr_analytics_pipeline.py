@@ -4,10 +4,25 @@ from pathlib import Path
 from airflow.decorators import dag
 from airflow.operators.empty import EmptyOperator
 from airflow.providers.docker.operators.docker import DockerOperator
-from cosmos import DbtTaskGroup
+from cosmos import DbtTaskGroup, DbtRunOperationLocalOperator
 from cosmos import ProjectConfig, ProfileConfig, ExecutionConfig
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator
 
+PROJECT_DIR= f"{os.environ['AIRFLOW_HOME']}/dags/dbt/emr_analytics"
+PROJECT_CONFIG=ProjectConfig(
+            PROJECT_DIR
+        )
+
+DBT_EXECUTABLE_PATH=f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt"
+
+PROFILE_CONFIG=ProfileConfig(
+    profile_name='emr_analytics',
+    target_name='dev',
+    profiles_yml_filepath=Path(f"{os.environ['AIRFLOW_HOME']}/dags/dbt/profiles.yml")
+)
+EXECUTION_CONFIG=ExecutionConfig(
+            dbt_executable_path=DBT_EXECUTABLE_PATH
+        )
 
 @dag(
     schedule_interval="@daily",
@@ -56,8 +71,8 @@ def emr_analytics_pipeline_dag():
     #     command='python /app/emr_transformation.py',  # Explicitly call your script
     # )
 
-    # bucket = os.environ.get('TRANSFORMATION_GCS_BUCKET_DESTINATION')
-    # bucket_path=os.environ.get('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX')
+    bucket = os.environ.get('TRANSFORMATION_GCS_BUCKET_DESTINATION')
+    bucket_path=os.environ.get('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX')
 
     # create_external_table = BigQueryCreateExternalTableOperator(    
     #     task_id="create_external_table_task",
@@ -78,25 +93,29 @@ def emr_analytics_pipeline_dag():
     #     }
     # )
 
+    dbt_stage_external_sources = DbtRunOperationLocalOperator(
+                task_id=f"dbt_stage_external_sources_task",
+                macro_name="stage_external_sources",
+                #project_config=PROJECT_CONFIG,
+                profile_config=PROFILE_CONFIG,
+                dbt_executable_path=DBT_EXECUTABLE_PATH,
+                project_dir=PROJECT_DIR,
+                #profile_config=profile_config,
+                install_deps=True
+            )
+
     dbt_run = DbtTaskGroup(
         group_id="dbt_run",
-        project_config=ProjectConfig(
-            "/opt/airflow/dags/dbt/emr_analytics",
-        ),
-        profile_config=ProfileConfig(
-            profile_name='emr_analytics',
-            target_name='dev',
-            profiles_yml_filepath=Path(f"{os.environ['AIRFLOW_HOME']}/dags/dbt/profiles.yml")
-        ),
-        execution_config=ExecutionConfig(
-            dbt_executable_path=f"{os.environ['AIRFLOW_HOME']}/dbt_venv/bin/dbt",
-        )
+        project_config=PROJECT_CONFIG,
+        profile_config=PROFILE_CONFIG,
+        execution_config=EXECUTION_CONFIG
     )
 
     post_dbt_task = EmptyOperator(task_id="post_dbt_task")
 
-    #hello >> generation >> ingestion >> transformation >> 
+    # hello >> generation >> ingestion >> transformation >> 
+    dbt_stage_external_sources >> dbt_run >> post_dbt_task 
     #create_external_table >> 
-    dbt_run >> post_dbt_task 
+    
 
 emr_analytics_pipeline_dag()
