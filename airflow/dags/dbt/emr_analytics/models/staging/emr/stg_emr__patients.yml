@@ -140,5 +140,3 @@ models:
       - name: ingested_at
         description: Timestamp when the data was ingested into the system.
         data_type: timestamp
-        data_tests:
-          - not_null

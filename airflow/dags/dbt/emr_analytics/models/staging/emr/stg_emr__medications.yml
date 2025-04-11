@@ -1,0 +1,96 @@
+models:
+  - name: stg_emr__medications
+    description: Medication data with basic cleaning and transformation applied
+    columns:
+      - name: medication_id
+        description: Unique identifier for the medication record
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: patient_id
+        description: Identifier for the patient prescribed this medication
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: payer_id
+        description: Identifier for the payer/insurance covering this medication
+        data_type: string
+        
+      - name: encounter_id
+        description: Identifier for the encounter when this medication was prescribed
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: medication_code
+        description: Code identifying the medication
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: medication_description
+        description: Text description of the medication
+        data_type: string
+        
+      - name: base_cost
+        description: Base cost of the medication
+        data_type: numeric
+        
+      - name: payer_coverage
+        description: Amount covered by payer/insurance
+        data_type: numeric
+        
+      - name: dispenses
+        description: Number of times the medication was dispensed
+        data_type: numeric
+        
+      - name: total_cost
+        description: Total cost of the medication
+        data_type: numeric
+        
+      - name: start_at_string
+        description: String representation of when the medication was started
+        data_type: string
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
+              
+      - name: start_at
+        description: Timestamp when the medication was started
+        data_type: timestamp
+        
+      - name: start_date
+        description: Date when the medication was started
+        data_type: date
+        data_tests:
+          - not_null
+          
+      - name: stop_at_string
+        description: String representation of when the medication was stopped (if applicable)
+        data_type: string
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
+              row_condition: "coalesce(stop_date_string, '') <> ''"
+              
+      - name: stop_at
+        description: Timestamp when the medication was stopped
+        data_type: timestamp
+        
+      - name: stop_date
+        description: Date when the medication was stopped (if applicable)
+        data_type: date
+        
+      - name: reason_code
+        description: Code for the reason this medication was prescribed
+        data_type: string
+        
+      - name: reason_description
+        description: Description of the reason this medication was prescribed
+        data_type: string
+        
+      - name: ingested_at
+        description: Timestamp when the data was ingested into the system
+        data_type: timestamp

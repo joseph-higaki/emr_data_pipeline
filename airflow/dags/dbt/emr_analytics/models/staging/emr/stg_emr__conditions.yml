@@ -1,0 +1,54 @@
+models:
+  - name: stg_emr__conditions
+    description: Condition data with basic cleaning and transformation applied
+    columns:          
+      - name: patient_id
+        description: Identifier for the patient with this condition
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: encounter_id
+        description: Identifier for the encounter when this condition was recorded
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: condition_code
+        description: Code identifying the condition
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: condition_description
+        description: Text description of the condition
+        data_type: string
+        
+      - name: start_at_string
+        description: String representation of when the condition started
+        data_type: string
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
+              
+      - name: start_date
+        description: Date when the condition started
+        data_type: date
+        data_tests:
+          - not_null
+          
+      - name: stop_at_string
+        description: String representation of when the condition ended (if applicable)
+        data_type: string
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
+              row_condition: "coalesce(stop_date_string, '') <> ''"
+              
+      - name: stop_date
+        description: Date when the condition ended (if applicable)
+        data_type: date
+        
+      - name: ingested_at
+        description: Timestamp when the data was ingested into the system
+        data_type: timestamp

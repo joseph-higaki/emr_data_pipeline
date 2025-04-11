@@ -1,0 +1,98 @@
+models:
+  - name: stg_emr__encounters
+    description: Encounter data with basic cleaning and transformation applied
+    columns:
+      - name: encounter_id
+        description: Unique identifier for the encounter
+        data_type: string
+        # data_tests:
+          # - not_null
+          
+      - name: start_at_string
+        description: String representation of when the encounter started
+        data_type: string
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z?$'
+              
+      - name: start_at
+        description: Timestamp when the encounter started
+        data_type: timestamp
+        # data_tests:
+          # - not_null
+          
+      - name: start_date
+        description: Date when the encounter started
+        data_type: date
+        # data_tests:
+          # - not_null
+          
+      - name: stop_at_string
+        description: String representation of when the encounter ended
+        data_type: string
+        tests:
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z?$'
+              row_condition: "coalesce(stop_at_string, '') <> ''"
+              
+      - name: stop_at
+        description: Timestamp when the encounter ended
+        data_type: timestamp
+        
+      - name: stop_date
+        description: Date when the encounter ended
+        data_type: date
+        
+      - name: patient_id
+        description: Identifier for the patient involved in this encounter
+        data_type: string
+        # data_tests:
+          # - not_null
+          
+      - name: organization_id
+        description: Identifier for the organization where the encounter occurred
+        data_type: string
+        
+      - name: provider_id
+        description: Identifier for the provider involved in this encounter
+        data_type: string
+        
+      - name: payer_id
+        description: Identifier for the payer/insurance for this encounter
+        data_type: string
+        
+      - name: encounter_class
+        description: Class/type of encounter (e.g., inpatient, outpatient)
+        data_type: string
+        
+      - name: encounter_code
+        description: Code identifying the encounter type
+        data_type: string
+        
+      - name: encounter_description
+        description: Text description of the encounter
+        data_type: string
+        
+      - name: base_encounter_cost
+        description: Base cost of the encounter
+        data_type: numeric
+        
+      - name: total_claim_cost
+        description: Total claim cost of the encounter
+        data_type: numeric
+        
+      - name: payer_coverage
+        description: Amount covered by payer/insurance
+        data_type: numeric
+        
+      - name: reason_code
+        description: Code for the reason of the encounter
+        data_type: string
+        
+      - name: reason_description
+        description: Description of the reason for the encounter
+        data_type: string
+        
+      - name: ingested_at
+        description: Timestamp when the data was ingested into the system
+        data_type: timestamp

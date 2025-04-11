@@ -14,3 +14,48 @@ sources:
             hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/patients/"
             uris:
               - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/patients/*"
+      - name: raw_organizations
+        description: "Raw organization data from Synthea in GCS"
+        external:
+          location: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/organizations/*"
+          options:
+            format: "PARQUET"
+            hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/organizations/"
+            uris:
+              - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/organizations/*"
+      - name: raw_providers
+        description: "Raw provider data from Synthea in GCS"
+        external:
+          location: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/providers/*"
+          options:
+            format: "PARQUET"
+            hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/providers/"
+            uris:
+              - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/providers/*"
+      - name: raw_conditions
+        description: "Raw condition data from Synthea in GCS"
+        external:
+          location: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/conditions/*"
+          options:
+            format: "PARQUET"
+            hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/conditions/"
+            uris:
+              - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/conditions/*"
+      - name: raw_medications
+        description: "Raw medication data from Synthea in GCS"
+        external:
+          location: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/medications/*"
+          options:
+            format: "PARQUET"
+            hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/medications/"
+            uris:
+              - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/medications/*"
+      - name: raw_encounters
+        description: "Raw encounter data from Synthea in GCS"
+        external:
+          location: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/encounters/*"
+          options:
+            format: "PARQUET"
+            hive_partition_uri_prefix: "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/encounters/"
+            uris:
+              - "gs://{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION') }}/{{ env_var('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX') }}/encounters/*"
