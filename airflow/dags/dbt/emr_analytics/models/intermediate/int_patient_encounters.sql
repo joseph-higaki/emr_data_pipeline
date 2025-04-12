@@ -17,26 +17,37 @@ source as (
 
     {% endif %}
 
+),
+patients as (
+    select
+        patient_id,
+        birth_date
+    from {{ ref('int_patients') }}
 )
 select
-    encounter_id,
-    start_at_string,
-    start_at,
-    start_date,
-    stop_at_string,
-    stop_at,
-    stop_date,
-    patient_id,
-    organization_id,
-    provider_id,
-    payer_id,
-    encounter_class,
-    encounter_code,
-    encounter_description,
-    base_encounter_cost,
-    total_claim_cost,
-    payer_coverage,
-    reason_code,
-    reason_description,
-    ingested_at
-from source
+    e.encounter_id,    
+    e.start_at,
+    e.start_date,    
+    e.stop_at,
+    e.stop_date,    
+    {{ datediff("p.birth_date", "e.start_at", "month") }} / 12 as patient_age_at_encounter_start_years,
+    {{ datediff("p.birth_date", "e.stop_at", "month") }} / 12 as patient_age_at_encounter_stop_years,
+    {{ datediff("e.start_at", "e.stop_at", "second") }} /60/60 as encounter_duration_hours,
+    e.patient_id,
+    e.organization_id,
+    e.provider_id,
+    e.payer_id,
+    e.encounter_class,
+    e.encounter_code,
+    e.encounter_description,
+    e.base_encounter_cost,
+    e.total_claim_cost,
+    e.payer_coverage,
+    e.reason_code,
+    e.reason_description,
+    e.ingested_at,
+    p.birth_date as patient_birth_date
+from source e
+left join patients p
+    on e.patient_id = p.patient_id
+
