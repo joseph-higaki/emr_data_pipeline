@@ -1,5 +1,5 @@
 models:
-  - name: fact_encounters
+  - name: fact_patient_encounters
     description: Fact table for encounters, containing relationships and metrics
     columns:
       - name: encounter_id
