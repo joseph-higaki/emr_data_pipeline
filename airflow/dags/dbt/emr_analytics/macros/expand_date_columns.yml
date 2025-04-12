@@ -1,0 +1,28 @@
+version: 2
+
+macros:
+  - name: expand_date_columns
+    description: >
+      This macro expands a single date column into two derived columns:
+      
+      1. <column_name>_date_string: The original timestamp value as a string (alias customizable)
+      2. <column_name>_date: The original value cast to a date data type (alias customizable)      
+    arguments:
+      - name: column_name
+        type: string
+        description: The name of the column containing timestamp data
+      - name: column_date_string_alias
+        type: string
+        description: Optional custom alias for the string representation column (defaults to <column_name>_date_string)        
+      - name: column_date_alias
+        type: string
+        description: Optional custom alias for the date-typed column (defaults to <column_name>_date)       
+    
+    docs:
+      show: true
+    
+    meta:
+      assumptions:
+        - The source column contains timestamp data in a format that can be cast to date        
+        - The dbt.safe_cast function is available for type conversions
+
