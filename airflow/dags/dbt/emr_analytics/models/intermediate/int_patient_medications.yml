@@ -1,0 +1,21 @@
+models:
+  - name: int_patient_medications
+    description: Patient medication data, one row = prescription within an encounter
+    columns:
+      - name: medication_id
+        description: Unique identifier for the medication record
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: patient_id
+        description: Identifier for the patient prescribed this medication
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: medication_code
+        description: Code identifying the medication
+        data_type: string
+        data_tests:
+          - not_null
