@@ -24,6 +24,11 @@ select
     encounter_id,
     condition_code,
     condition_description,    
+    case 
+        when condition_description like '%(%)'
+        then regexp_substr(condition_description, '\\(([^)]+)\\)', 1, 1)
+        else ''
+    end as condition_description_type,
     start_date,    
     stop_date,
     ingested_at
