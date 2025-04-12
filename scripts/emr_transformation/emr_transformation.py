@@ -19,7 +19,7 @@ import sys
 import logging
 import uuid
 import pandas as pd
-from datetime import datetime
+import datetime
 from google.cloud import storage
 import tempfile
 import re
@@ -77,7 +77,7 @@ def validate_timestamp(timestamp: str) -> bool:
         
     # Check that it's a valid datetime
     try:
-        datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+        datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
         return True
     except ValueError:
         return False
@@ -140,7 +140,7 @@ def save_processed_timestamp(dest_bucket: str, dest_prefix: str, ingested_at: st
         return
     
     # Get the current timestamp for transformed_at
-    transformed_at = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    transformed_at = datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     metadata_uri = f"gs://{dest_bucket}/{dest_prefix}/_metadata/processed_timestamps.csv"
     
     # Create a dataframe for the new record

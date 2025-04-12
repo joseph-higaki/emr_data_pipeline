@@ -15,7 +15,7 @@ Usage:
 import os
 import sys
 import logging
-from datetime import datetime
+import datetime
 from google.cloud import storage
 import tempfile
 import requests
@@ -117,7 +117,7 @@ def main():
         
         #get ingestion time. Later this should be extracted from the source files manifest
         # For now, we will use the current time
-        ingested_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")  # UTC timestamp
+        ingested_at = datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")  # UTC timestamp        
         # Process each file from the ZIP
         for file_path, file_name in read_emr_patient_data(source_url):
             # Upload to GCS
