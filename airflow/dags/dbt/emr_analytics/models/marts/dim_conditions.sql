@@ -6,7 +6,8 @@ source as (
     select * from {{ ref('int_patient_conditions') }}
 
 )
-select 
+select distinct 
     condition_code,
-    condition_description
+    condition_description,
+    condition_description_type
 from source
