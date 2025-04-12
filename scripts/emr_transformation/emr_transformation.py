@@ -34,6 +34,21 @@ logging.basicConfig(
 )
 logger = logging.getLogger('emr_transformation')
 
+def get_expected_entities():
+    """
+    Get the list of expected entities from environment variable.
+    Returns a set of entity names.
+    """
+    entities_str = os.environ.get('EMR_EXPECTED_ENTITIES', '')
+    if not entities_str:
+        logger.warning("EMR_EXPECTED_ENTITIES not set, using default empty set")
+        return set()
+    
+    # Convert to lowercase set for case-insensitive matching
+    entities = {entity.strip().lower() for entity in entities_str.split(',')}
+    logger.info(f"Loaded {len(entities)} expected entities: {', '.join(sorted(entities))}")
+    return entities
+
 # Define expected entity types
 EXPECTED_ENTITIES = {
     'allergies',
@@ -368,7 +383,8 @@ def process_ingestion_batch(
         entity_name = extract_entity_name(file_path)
         
         # Check if entity is in our expected list
-        if entity_name not in EXPECTED_ENTITIES:
+        expected_entities = get_expected_entities()
+        if entity_name not in expected_entities:
             logger.warning(f"Unexpected entity type found: {entity_name} in file {file_path}")
             continue
             
@@ -385,7 +401,7 @@ def process_ingestion_batch(
         uploaded_files.append(output_path)
     
     # Check for missing entities
-    missing_entities = EXPECTED_ENTITIES - processed_entities
+    missing_entities = expected_entities - processed_entities
     if missing_entities:
         logger.warning(f"Missing expected entities in timestamp {timestamp}: {', '.join(missing_entities)}")
     
