@@ -14,10 +14,8 @@ renamed as (
         id as patient_id,
 
         ---------- dates
-        birthdate as birthdate_string,
-        {{ dbt.safe_cast("birthdate", api.Column.translate_type("date")) }} as birth_date,                
-        deathdate as deathdate_string,        
-        {{ dbt.safe_cast("deathdate", api.Column.translate_type("date")) }} as death_date,        
+        {{ expand_date_columns('birthdate', 'birth_date_string', 'birth_date') }},   
+        {{ expand_date_columns('deathdate', 'death_date_string', 'death_date') }},
         
         ---------- text
         ssn as social_security_number,

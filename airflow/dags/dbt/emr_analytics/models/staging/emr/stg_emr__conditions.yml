@@ -1,6 +1,12 @@
 models:
   - name: stg_emr__conditions
     description: Condition data with basic cleaning and transformation applied
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - encounter_id
+            - condition_code            
+            - ingested_at
     columns:          
       - name: patient_id
         description: Identifier for the patient with this condition
@@ -24,7 +30,7 @@ models:
         description: Text description of the condition
         data_type: string
         
-      - name: start_at_string
+      - name: start_date_string
         description: String representation of when the condition started
         data_type: string
         tests:
@@ -37,7 +43,7 @@ models:
         data_tests:
           - not_null
           
-      - name: stop_at_string
+      - name: stop_date_string
         description: String representation of when the condition ended (if applicable)
         data_type: string
         tests:

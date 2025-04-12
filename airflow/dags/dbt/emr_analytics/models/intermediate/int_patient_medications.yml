@@ -1,12 +1,20 @@
 models:
   - name: int_patient_medications
     description: Patient medication data, one row = prescription within an encounter
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - encounter_id
+            - medication_code
+            - start_at
+            - stop_at            
     columns:
-      - name: medication_id
+      - name: patient_medication_id
         description: Unique identifier for the medication record
         data_type: string
         data_tests:
           - not_null
+          - unique
           
       - name: patient_id
         description: Identifier for the patient prescribed this medication

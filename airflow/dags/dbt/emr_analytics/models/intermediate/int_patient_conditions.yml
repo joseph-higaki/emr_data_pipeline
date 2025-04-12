@@ -1,0 +1,27 @@
+models:
+  - name: int_patient_conditions
+    description:  Patient medication data, one row = diagnosis within an encounter
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - encounter_id
+            - condition_code                        
+    colummns:
+      - name: condition_id
+        description: Unique identifier for the condition record
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: patient_id
+        description: Identifier for the patient diagnosed with this condition
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: condition_code
+        description: Code identifying the condition
+        data_type: string
+        data_tests:
+          - not_null
+

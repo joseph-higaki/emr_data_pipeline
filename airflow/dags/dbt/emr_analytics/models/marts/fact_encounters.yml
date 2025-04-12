@@ -1,0 +1,66 @@
+models:
+  - name: fact_encounters
+    description: Fact table for encounters, containing relationships and metrics
+    columns:
+      - name: encounter_id
+        description: Unique identifier for the encounter and foreign key to dim_encounters
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+          
+      - name: patient_id
+        description: Foreign key to dim_patients
+        data_type: string
+        data_tests:
+          - not_null
+          
+      - name: organization_id
+        description: Foreign key to dim_organizations
+        data_type: string
+        
+      - name: provider_id
+        description: Foreign key to dim_providers
+        data_type: string
+        
+      - name: payer_id
+        description: Foreign key to dim_payers
+        data_type: string
+        
+      - name: start_at
+        description: Timestamp when the encounter started
+        data_type: timestamp
+        data_tests:
+          - not_null
+          
+      - name: start_date
+        description: Date when the encounter started
+        data_type: date
+        data_tests:
+          - not_null
+          
+      - name: stop_at
+        description: Timestamp when the encounter ended
+        data_type: timestamp
+        
+      - name: stop_date
+        description: Date when the encounter ended
+        data_type: date
+        
+      - name: base_encounter_cost
+        description: Base cost of the encounter
+        data_type: numeric
+        
+      - name: total_claim_cost
+        description: Total claim cost of the encounter
+        data_type: numeric
+        
+      - name: payer_coverage
+        description: Amount covered by payer/insurance
+        data_type: numeric
+        
+      - name: ingested_at
+        description: Timestamp when the data was ingested
+        data_type: timestamp
+        data_tests:
+          - not_null

@@ -1,0 +1,42 @@
+models:
+  - name: fact_medications
+    description: Fact table for medication records, containing relationships and metrics
+    columns:
+      - name: medication_id
+        description: Unique identifier for the medication record
+        
+      - name: patient_id
+        description: Foreign key to dim_patients
+        
+      - name: payer_id
+        description: Foreign key to payers
+        
+      - name: encounter_id
+        description: Foreign key to encounters
+        
+      - name: medication_code
+        description: Foreign key to dim_medications
+        
+      - name: base_cost
+        description: Base cost of the medication
+        
+      - name: payer_coverage
+        description: Amount covered by payer/insurance
+        
+      - name: dispenses
+        description: Number of times the medication was dispensed
+        
+      - name: total_cost
+        description: Total cost of the medication
+        
+      - name: start_date
+        description: Date when the medication was started
+        
+      - name: stop_date
+        description: Date when the medication was stopped (if applicable)
+        
+      - name: reason_code
+        description: Code for the reason this medication was prescribed
+        
+      - name: ingested_at
+        description: Timestamp when the data was ingested

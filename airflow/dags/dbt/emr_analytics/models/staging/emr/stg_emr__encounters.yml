@@ -1,12 +1,17 @@
 models:
   - name: stg_emr__encounters
     description: Encounter data with basic cleaning and transformation applied
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - encounter_id            
+            - ingested_at
     columns:
       - name: encounter_id
         description: Unique identifier for the encounter
         data_type: string
-        # data_tests:
-          # - not_null
+        data_tests:
+          - not_null
           
       - name: start_at_string
         description: String representation of when the encounter started

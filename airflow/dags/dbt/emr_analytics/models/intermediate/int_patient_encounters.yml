@@ -1,0 +1,11 @@
+models:
+  - name: int_patient_encounters
+    description: Patient Encounter data, one row per encounter
+    columns:
+      - name: encounter_id
+        description: Unique identifier for the encounter
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+

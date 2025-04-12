@@ -18,8 +18,7 @@ renamed as (
         state,
         zip as zip_code,        
         {{ dbt.safe_cast("lat", api.Column.translate_type("numeric")) }} as lat,
-        {{ dbt.safe_cast("lon", api.Column.translate_type("numeric")) }} as lon,
-        {{ dbt.safe_cast("utilization", api.Column.translate_type("numeric")) }} as utilization,
+        {{ dbt.safe_cast("lon", api.Column.translate_type("numeric")) }} as lon,        
         ingested_at
     from source
 )

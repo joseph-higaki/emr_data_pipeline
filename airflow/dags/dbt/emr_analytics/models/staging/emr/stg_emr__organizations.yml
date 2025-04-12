@@ -1,6 +1,11 @@
 models:
   - name: stg_emr__organizations
     description: Organization data with basic cleaning and transformation applied
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - organization_id
+            - ingested_at
     columns:
       - name: organization_id
         description: Unique identifier for the organization

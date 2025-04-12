@@ -18,9 +18,9 @@ renamed as (
         dispenses,
         totalcost as total_cost,
         
-        {{ expand_timestamp_column('start') }},
+        {{ expand_timestamp_columns('start') }},
         
-        {{ expand_timestamp_column('stop') }},
+        {{ expand_timestamp_columns('stop') }},
 
         reasoncode as reason_code,
         reasondescription as reason_description,

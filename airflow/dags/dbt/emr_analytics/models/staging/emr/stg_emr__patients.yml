@@ -1,15 +1,19 @@
 models:
   - name: stg_emr__patients
     description: Patient data with basic cleaning and transformation applied, one row per patient
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - patient_id
+            - ingested_at      
     columns:
       - name: patient_id
         description: Unique identifier for the patient.
         data_type: string
         data_tests:
-          - not_null
-          # - unique not unique in the source data and stg
+          - not_null          
           
-      - name: birthdate_string
+      - name: birth_date_string
         description: The birthdate of the patient.
         data_type: string
         tests:
@@ -22,13 +26,13 @@ models:
         data_tests:
           - not_null
           
-      - name: deathdate_string
+      - name: death_date_string
         description: The deathdate of the patient.
         data_type: string
         tests:
           - dbt_expectations.expect_column_values_to_match_regex:
               regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
-              row_condition: "coalesce(deathdate_string, '') <> ''"
+              row_condition: "coalesce(death_date_string, '') <> ''"
               
       - name: death_date
         description: The death date of the patient, if applicable.

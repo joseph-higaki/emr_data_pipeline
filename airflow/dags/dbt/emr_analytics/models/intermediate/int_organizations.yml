@@ -1,0 +1,10 @@
+models:
+  - name: int_organizations
+    description: Organization data, one row per organization
+    columns:
+      - name: organization_id
+        description: Unique identifier for the organization
+        data_type: string
+        data_tests:
+          - not_null
+          - unique

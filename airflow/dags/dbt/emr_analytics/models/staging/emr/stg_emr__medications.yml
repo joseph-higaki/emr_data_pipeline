@@ -1,12 +1,15 @@
 models:
   - name: stg_emr__medications
     description: Medication data with basic cleaning and transformation applied
-    columns:
-      - name: medication_id
-        description: Unique identifier for the medication record
-        data_type: string
-        data_tests:
-          - not_null
+    tests:
+        - dbt_utils.unique_combination_of_columns:
+            combination_of_columns:
+              - encounter_id
+              - medication_code
+              - start_at
+              - stop_at
+              - ingested_at
+    columns:     
           
       - name: patient_id
         description: Identifier for the patient prescribed this medication
@@ -55,7 +58,7 @@ models:
         data_type: string
         tests:
           - dbt_expectations.expect_column_values_to_match_regex:
-              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z?$'
               
       - name: start_at
         description: Timestamp when the medication was started
@@ -72,8 +75,8 @@ models:
         data_type: string
         tests:
           - dbt_expectations.expect_column_values_to_match_regex:
-              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])$'
-              row_condition: "coalesce(stop_date_string, '') <> ''"
+              regex: '^[0-9]{4}-(?:0[1-9]|1[012])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z?$'
+              row_condition: "coalesce(stop_at_string, '') <> ''"
               
       - name: stop_at
         description: Timestamp when the medication was stopped
