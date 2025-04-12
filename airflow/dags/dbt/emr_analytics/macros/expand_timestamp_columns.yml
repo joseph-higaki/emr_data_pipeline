@@ -1,0 +1,24 @@
+version: 2
+
+macros:
+  - name: expand_timestamp_column
+    description: >
+      This macro expands a single timestamp column into three derived columns:
+      
+      1. <column_name>_at_string: The original timestamp value as a string
+      2. <column_name>_at: The original value cast to a timestamp data type
+      3. <column_name>_date: The date portion of the timestamp (truncated to day)
+    arguments:
+      - name: column_name
+        type: string
+        description: The name of the column containing timestamp data
+    
+    docs:
+      show: true
+    
+    meta:
+      assumptions:
+        - The source column contains timestamp data in a format that can be cast to timestamp
+        - The database supports the date_trunc function
+        - The dbt.safe_cast function is available for type conversions
+    
