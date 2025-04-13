@@ -1,0 +1,10 @@
+age_group_id,age_group_name,min_age,max_age,description
+1,infant,-0.001,1,"0-1 (Infant)"
+2,toddler,1,5,"1-4 (Toddler)"
+3,child,5,13,"5-12 (Child)"
+4,adolescent,13,18,"13-17 (Adolescent)"
+5,young_adult,18,26,"18-25 (Young Adult)"
+6,adult,26,45,"26-44 (Adult)"
+7,middle_age,45,65,"45-64 (Middle Age)"
+8,senior,65,120,"65+ (Senior)"
+9,invalid,-999,-0.001,"Invalid Age"

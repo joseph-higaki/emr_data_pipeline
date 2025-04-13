@@ -1,7 +1,7 @@
 version: 2
 
 macros:
-  - name: expand_timestamp_column
+  - name: expand_timestamp_columns
     description: >
       This macro expands a single timestamp column into three derived columns:
       
