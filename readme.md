@@ -18,7 +18,7 @@ For testing and demonstration purposes, this project uses [Synthea™](https://s
 
 ## Data Pipeline Architecture
 
-![EMR Data Pipeline Architecture](https://path/to/architecture/diagram.png)
+![EMR Data Pipeline Architecture](<_resources/readme.md/patient_data_pipeline.drawio.png>)
 
 ### Workflow Orchestration with Apache Airflow
 - Manages the entire data pipeline workflow
@@ -73,13 +73,19 @@ Marts
 - Star Schema dimensional models
 ```
 
-![dbt Data Lineage](https://path/to/dbt/lineage.png)
+![alt text](_resources/readme.md/image.png)
+
+![alt text](_resources/readme.md/image-1.png)
+
+![alt text](_resources/readme.md/image-2.png)
+
+![alt text](_resources/readme.md/image-3.png)
+
+![alt text](_resources/readme.md/image-4.png)
 
 ## Data Mart ERD
 
 The data mart implements a healthcare-specific star schema with the following key entities:
-
-![EMR Data Mart ERD](https://path/to/data/mart/erd.png)
 
 ### Dimension Tables
 - `dim_patients`: Patient demographics and identifiers
@@ -158,13 +164,11 @@ Open your browser and navigate to http://localhost:8080
 
 ### Analytics Reports
 After the pipeline completes, access the Looker Studio dashboards at:
-[EMR Analytics Dashboard](https://lookerstudio.google.com/your-dashboard-link)
+[EMR Analytics Dashboard](https://lookerstudio.google.com/u/0/reporting/2989b4e9-80c2-4747-9f60-f3e114da9943/page/7SrGF)
 
 #### Sample Dashboard Screenshots
 
-![Patient Demographics Dashboard](https://path/to/demographics/dashboard.png)
-
-![Clinical Insights Dashboard](https://path/to/clinical/dashboard.png)
+![alt text](_resources/readme.md/image-5.png)
 
 ## Development
 
