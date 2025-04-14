@@ -13,10 +13,10 @@ renamed as (
         encounter as encounter_id,
         code as medication_code,
         description as medication_description,
-        base_cost,
-        payer_coverage,
-        dispenses,
-        totalcost as total_cost,
+        {{ dbt.safe_cast("base_cost", api.Column.translate_type("numeric")) }} as base_cost,
+        {{ dbt.safe_cast("payer_coverage", api.Column.translate_type("numeric")) }} as payer_coverage,
+        {{ dbt.safe_cast("dispenses", api.Column.translate_type("numeric")) }} as dispenses,
+        {{ dbt.safe_cast("totalcost", api.Column.translate_type("numeric")) }} as total_cost,
         
         {{ expand_timestamp_columns('start') }},
         
