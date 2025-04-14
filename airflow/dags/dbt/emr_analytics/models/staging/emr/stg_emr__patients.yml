@@ -111,11 +111,7 @@ models:
         
       - name: county
         description: The county of the patient's residence.
-        data_type: string
-        
-      - name: fips_code
-        description: The Federal Information Processing Standards (FIPS) code for the patient's location.
-        data_type: string
+        data_type: string        
         
       - name: zip_code
         description: The zip code of the patient's residence.

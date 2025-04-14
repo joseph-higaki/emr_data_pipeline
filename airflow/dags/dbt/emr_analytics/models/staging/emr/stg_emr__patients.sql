@@ -35,15 +35,13 @@ renamed as (
         city,
         state,
         county,
-        fips as fips_code,
         zip as zip_code,
 
         #--------- numbers
         {{ dbt.safe_cast("lat", api.Column.translate_type("numeric")) }} as lat,
         {{ dbt.safe_cast("lon", api.Column.translate_type("numeric")) }} as lon,
         {{ dbt.safe_cast("healthcare_expenses", api.Column.translate_type("numeric")) }} as healthcare_expenses,
-        {{ dbt.safe_cast("healthcare_coverage", api.Column.translate_type("numeric")) }} as healthcare_coverage,
-        {{ dbt.safe_cast("income", api.Column.translate_type("numeric")) }} as income,         
+        {{ dbt.safe_cast("healthcare_coverage", api.Column.translate_type("numeric")) }} as healthcare_coverage,        
         ingested_at
     from source
 
