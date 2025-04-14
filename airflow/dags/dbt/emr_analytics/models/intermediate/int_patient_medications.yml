@@ -8,6 +8,8 @@ models:
             - medication_code
             - start_at
             - stop_at            
+            - base_cost
+            - dispenses
     columns:
       - name: patient_medication_id
         description: Unique identifier for the medication record

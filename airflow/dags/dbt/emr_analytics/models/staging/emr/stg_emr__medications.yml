@@ -8,6 +8,8 @@ models:
               - medication_code
               - start_at
               - stop_at
+              - base_cost
+              - dispenses
               - ingested_at
     columns:     
           

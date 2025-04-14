@@ -19,7 +19,7 @@ patients as (
 ),
 medications as (
     select
-        {{ dbt_utils.generate_surrogate_key(['encounter_id', 'medication_code', 'start_at', 'stop_at']) }} as patient_medication_id,    
+        {{ dbt_utils.generate_surrogate_key(['encounter_id', 'medication_code', 'start_at', 'stop_at', 'base_cost', 'dispenses']) }} as patient_medication_id,    
         source.*
     from source
 ),
