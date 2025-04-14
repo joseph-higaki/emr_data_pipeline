@@ -76,7 +76,7 @@
 				"mechatroner.rainbow-csv",
 				"bierner.markdown-mermaid",
 				"GitHub.copilot",
-                "innoverio.vscode-dbt-power-user@0.43.3",
+                "innoverio.vscode-dbt-power-user@0.55.14",
 				"hashicorp.terraform"
 			]
 		}	
