@@ -9,6 +9,7 @@
 *.tfstate.*
 **.terraform
 **.terraform.lock.*
+**.tfvars
 
 **logs/
 **.env
