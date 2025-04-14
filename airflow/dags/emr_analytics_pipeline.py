@@ -33,7 +33,7 @@ EXECUTION_CONFIG=ExecutionConfig(
 def emr_analytics_pipeline_dag():
     hello = EmptyOperator(task_id="hello_task")
 
-    generation = EmptyOperator(task_id="generation_task")
+    # generation = EmptyOperator(task_id="generation_task")
 
     # ingestion = DockerOperator(
     #     task_id='ingestion_task',
@@ -44,6 +44,7 @@ def emr_analytics_pipeline_dag():
     #             'INGESTION_SYNTHEA_URL_SOURCE': os.environ.get('INGESTION_SYNTHEA_URL_SOURCE'),
     #             'INGESTION_GCS_BUCKET_DESTINATION': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION'),
     #             'INGESTION_GCS_BUCKET_DESTINATION_PREFIX': os.environ.get('INGESTION_GCS_BUCKET_DESTINATION_PREFIX'),
+    #             'EMR_EXPECTED_ENTITIES': os.environ.get('EMR_EXPECTED_ENTITIES'),                
     #             'DEBUG': 'true',
     #     },
     #     docker_url='tcp://docker-proxy:2375',
@@ -62,6 +63,7 @@ def emr_analytics_pipeline_dag():
             'TRANSFORMATION_GCS_BUCKET_SOURCE_PREFIX': os.environ.get('TRANSFORMATION_GCS_BUCKET_SOURCE_PREFIX'),
             'TRANSFORMATION_GCS_BUCKET_DESTINATION': os.environ.get('TRANSFORMATION_GCS_BUCKET_DESTINATION'),
             'TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX': os.environ.get('TRANSFORMATION_GCS_BUCKET_DESTINATION_PREFIX'),
+            'EMR_EXPECTED_ENTITIES': os.environ.get('EMR_EXPECTED_ENTITIES'),
             'DEBUG': 'true'
         },
         docker_url='tcp://docker-proxy:2375',
@@ -91,7 +93,7 @@ def emr_analytics_pipeline_dag():
     post_dbt_task = EmptyOperator(task_id="post_dbt_task")
 
     # hello >> generation >> 
-    #ingestion >> 
+    # generation >> ingestion >> 
     transformation >>  dbt_stage_external_sources >> dbt_run >> post_dbt_task 
     #create_external_table >> 
     
