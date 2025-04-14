@@ -20,7 +20,7 @@ with encounter as(
 , result as(
     select * 
     from encounter_and_past_encounters
-    where past_encounter_number = 1
+    where past_encounter_number = 1    
 )
 
 select

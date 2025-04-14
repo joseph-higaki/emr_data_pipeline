@@ -18,9 +18,9 @@ renamed as (
         encounterclass as encounter_class,
         code as encounter_code,
         description as encounter_description,
-        base_encounter_cost,
-        total_claim_cost,
-        payer_coverage,
+        {{ dbt.safe_cast("base_encounter_cost", api.Column.translate_type("numeric")) }} as base_encounter_cost,
+        {{ dbt.safe_cast("total_claim_cost", api.Column.translate_type("numeric")) }} as total_claim_cost,
+        {{ dbt.safe_cast("payer_coverage", api.Column.translate_type("numeric")) }} as payer_coverage,        
         reasoncode as reason_code,
         reasondescription as reason_description,
         ingested_at
