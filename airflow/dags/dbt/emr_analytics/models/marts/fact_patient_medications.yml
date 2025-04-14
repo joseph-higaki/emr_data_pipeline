@@ -1,6 +1,7 @@
 models:
-  - name: fact_medications
-    description: Fact table for medication records, containing relationships and metrics
+  - name: fact_patient_medications
+    description: Fact table for medication records containing information about
+      medications prescribed to patients, including costs and payer coverage.
     columns:
       - name: medication_id
         description: Unique identifier for the medication record
