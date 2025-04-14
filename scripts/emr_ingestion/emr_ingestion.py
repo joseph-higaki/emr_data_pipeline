@@ -55,8 +55,11 @@ def extract_entity_name(file_name: str) -> str:
     Returns:
         Entity name
     """
-    # Remove extension
-    entity_name = os.path.splitext(file_name)[0].lower()
+    # Use basename to get the rightmost part of the path
+    base_name = os.path.basename(file_name)
+    
+    # Remove the extension and convert to lowercase
+    entity_name = os.path.splitext(base_name)[0].lower()
     return entity_name
 
 def read_emr_patient_data(source_url: str): 
@@ -116,8 +119,12 @@ def upload_to_gcs(ingested_at, file_path, file_name, bucket_name, destination_pa
     """
     # Initialize GCS client
     client = storage.Client()
-    bucket = client.bucket(bucket_name)          
-    full_destination = f"{destination_path}/{ingested_at}/{file_name}"    
+    bucket = client.bucket(bucket_name)
+    
+    # Use basename to flatten the hierarchy - ignore any subfolder structure in the ZIP
+    base_name = os.path.basename(file_name)
+    full_destination = f"{destination_path}/{ingested_at}/{base_name}"
+    
     logger.info(f"Uploading to GCS: gs://{bucket_name}/{full_destination}")
     
     # Create a blob and upload the file
@@ -165,11 +172,11 @@ def main():
                 logger.warning(f"Skipping file {file_name}: entity '{entity_name}' not in expected entities list")
                 skipped_files.append(file_name)
                 continue
-                
+
             # Upload to GCS
             output_path = upload_to_gcs(ingested_at, file_path, file_name, bucket_name, destination_prefix)
-            uploaded_files.append(output_path)            
-        
+            uploaded_files.append(output_path)                    
+       
         # Clean up temporary directory after processing
         temp_dir = os.path.dirname(file_path) if 'file_path' in locals() else None
         if temp_dir:
