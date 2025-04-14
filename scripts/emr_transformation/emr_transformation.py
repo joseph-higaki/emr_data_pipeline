@@ -26,6 +26,7 @@ import re
 from typing import List, Dict, Tuple
 import pyarrow as pa
 import pyarrow.parquet as pq
+import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -48,28 +49,6 @@ def get_expected_entities():
     entities = {entity.strip().lower() for entity in entities_str.split(',')}
     logger.info(f"Loaded {len(entities)} expected entities: {', '.join(sorted(entities))}")
     return entities
-
-# Define expected entity types
-EXPECTED_ENTITIES = {
-    'allergies',
-    'careplans',
-    'claims',
-    'claims_transactions',
-    'conditions',
-    'devices',
-    'encounters',
-    'imaging_studies',
-    'immunizations',
-    'medications',
-    'observations',
-    'organizations',
-    'patients',
-    'payers',
-    'payer_transitions',
-    'procedures',
-    'providers',
-    'supplies'
-}
 
 # Timestamp format validation regex
 # Matches ISO format: YYYY-MM-DDThh:mm:ssZ
@@ -422,14 +401,16 @@ def main():
         logger.debug("Running in DEBUG mode")
     
     try:
-      # Get previously processed timestamps
+        # Get previously processed timestamps
         processed_timestamps = get_processed_timestamps(dest_bucket, dest_prefix)
         
         # Find the latest ingested_at timestamp that was already processed
-        last_processed_ingested_at = ""
+        last_processed_ingested_at = None
         if processed_timestamps:
-            last_processed_ingested_at = max(processed_timestamps.keys())
-            logger.info(f"Last processed ingested_at timestamp: {last_processed_ingested_at}")
+            last_processed_ingested_at = max(
+                datetime.datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ") for ts in processed_timestamps.keys()
+            )
+            logger.info(f"Last processed ingested_at timestamp: {last_processed_ingested_at.isoformat()}Z")
         
         # List all input files organized by ingestion timestamp
         timestamp_files = list_input_files(source_bucket, source_prefix)
@@ -439,35 +420,39 @@ def main():
             return 0
         
         # Filter and sort timestamps to only process new ones
-        sorted_timestamps = sorted(timestamp_files.keys())
+        sorted_timestamps = sorted(
+            datetime.datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ") for ts in timestamp_files.keys()
+        )
+        logger.debug(f"Found {len(sorted_timestamps)} timestamps to process: {', '.join(ts.isoformat() + 'Z' for ts in sorted_timestamps)}")
+        
         if last_processed_ingested_at:
             new_timestamps = [ts for ts in sorted_timestamps if ts > last_processed_ingested_at]
             if not new_timestamps:
-                logger.info(f"No new data to process. Last processed ingested_at: {last_processed_ingested_at}")
+                logger.info(f"No new data to process. Last processed ingested_at: {last_processed_ingested_at.isoformat()}Z")
                 return 0
-            logger.info(f"Processing {len(new_timestamps)} new ingested_at batches after {last_processed_ingested_at}")
+            logger.info(f"Processing {len(new_timestamps)} new ingested_at batches after {last_processed_ingested_at.isoformat()}Z")
             sorted_timestamps = new_timestamps
-            
+        
         # Process each ingestion batch
         all_uploaded_files = []
-        
         for ingested_at in sorted_timestamps:
-            file_paths = timestamp_files[ingested_at]
-            logger.info(f"Processing {len(file_paths)} files from ingested_at={ingested_at}")
+            ingested_at_str = ingested_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+            file_paths = timestamp_files[ingested_at_str]
+            logger.info(f"Processing {len(file_paths)} files from ingested_at={ingested_at_str}")
             
             try:
                 uploaded_files = process_ingestion_batch(
-                    source_bucket, ingested_at, file_paths, 
+                    source_bucket, ingested_at_str, file_paths, 
                     dest_bucket, dest_prefix
                 )
                 
                 all_uploaded_files.extend(uploaded_files)
                 
                 # Save this ingested_at timestamp as processed
-                save_processed_timestamp(dest_bucket, dest_prefix, ingested_at)
+                save_processed_timestamp(dest_bucket, dest_prefix, ingested_at_str)
                 
             except ValueError as e:
-                logger.error(f"Error processing batch with ingested_at={ingested_at}: {str(e)}")
+                logger.error(f"Error processing batch with ingested_at={ingested_at_str}: {str(e)}")
         
         # Print output paths for Airflow to capture
         logger.info(f"Uploaded {len(all_uploaded_files)} files")        
