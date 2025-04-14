@@ -12,3 +12,6 @@
 
 **logs/
 **.env
+
+airflow db
+**/airflow_postgresql_data/*
