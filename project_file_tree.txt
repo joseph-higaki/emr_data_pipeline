@@ -1,0 +1,2234 @@
+.
+├── airflow
+│   ├── airflow_postgresql_data [error opening dir]
+│   ├── config
+│   ├── credentials
+│   │   └── airflow-ingestion
+│   ├── dags
+│   │   ├── dbt
+│   │   │   ├── emr_analytics
+│   │   │   │   ├── analyses
+│   │   │   │   │   ├── calculate_past_encoutner.sql
+│   │   │   │   │   ├── check_encounter_medication.sql
+│   │   │   │   │   ├── check_fact_patient_readmissions.sql
+│   │   │   │   │   ├── check_int_encounters.sql
+│   │   │   │   │   ├── check_orgs.sql
+│   │   │   │   │   ├── encounter_dates.sql
+│   │   │   │   │   ├── encouters_by_month.sql
+│   │   │   │   │   ├── raw_patients.sql
+│   │   │   │   │   ├── stg_customers_review.sql
+│   │   │   │   │   ├── stg_medications.sql
+│   │   │   │   │   └── top_medications.sql
+│   │   │   │   ├── dbt_packages
+│   │   │   │   │   ├── dbt_date
+│   │   │   │   │   │   ├── CHANGELOG.md
+│   │   │   │   │   │   ├── dbt_project.yml
+│   │   │   │   │   │   ├── images
+│   │   │   │   │   │   │   └── xebia-logo-large-transparent.png
+│   │   │   │   │   │   ├── integration_tests
+│   │   │   │   │   │   │   ├── ci
+│   │   │   │   │   │   │   │   └── profiles.yml
+│   │   │   │   │   │   │   ├── dbt_project.yml
+│   │   │   │   │   │   │   ├── docker
+│   │   │   │   │   │   │   │   ├── hive-site.xml
+│   │   │   │   │   │   │   │   ├── spark-defaults.conf
+│   │   │   │   │   │   │   │   └── trino
+│   │   │   │   │   │   │   │       └── catalog
+│   │   │   │   │   │   │   │           └── memory.properties
+│   │   │   │   │   │   │   ├── docker-compose.yml
+│   │   │   │   │   │   │   ├── docker-start.sh
+│   │   │   │   │   │   │   ├── docker-stop.sh
+│   │   │   │   │   │   │   ├── macros
+│   │   │   │   │   │   │   │   ├── expression_is_true.sql
+│   │   │   │   │   │   │   │   ├── get_custom_schema.sql
+│   │   │   │   │   │   │   │   └── get_test_dates.sql
+│   │   │   │   │   │   │   ├── models
+│   │   │   │   │   │   │   │   ├── dates.sql
+│   │   │   │   │   │   │   │   ├── dim_date_fiscal.sql
+│   │   │   │   │   │   │   │   ├── dim_date.sql
+│   │   │   │   │   │   │   │   ├── dim_hour.sql
+│   │   │   │   │   │   │   │   ├── dim_week.sql
+│   │   │   │   │   │   │   │   ├── test_dates.sql
+│   │   │   │   │   │   │   │   └── test_dates.yml
+│   │   │   │   │   │   │   ├── packages.yml
+│   │   │   │   │   │   │   └── test.sh
+│   │   │   │   │   │   ├── LICENSE
+│   │   │   │   │   │   ├── macros
+│   │   │   │   │   │   │   ├── calendar_date
+│   │   │   │   │   │   │   │   ├── convert_timezone.sql
+│   │   │   │   │   │   │   │   ├── date_part.sql
+│   │   │   │   │   │   │   │   ├── day_name.sql
+│   │   │   │   │   │   │   │   ├── day_of_month.sql
+│   │   │   │   │   │   │   │   ├── day_of_week.sql
+│   │   │   │   │   │   │   │   ├── day_of_year.sql
+│   │   │   │   │   │   │   │   ├── from_unixtimestamp.sql
+│   │   │   │   │   │   │   │   ├── iso_week_end.sql
+│   │   │   │   │   │   │   │   ├── iso_week_of_year.sql
+│   │   │   │   │   │   │   │   ├── iso_week_start.sql
+│   │   │   │   │   │   │   │   ├── last_month_name.sql
+│   │   │   │   │   │   │   │   ├── last_month_number.sql
+│   │   │   │   │   │   │   │   ├── last_month.sql
+│   │   │   │   │   │   │   │   ├── last_week.sql
+│   │   │   │   │   │   │   │   ├── month_name.sql
+│   │   │   │   │   │   │   │   ├── n_days_ago.sql
+│   │   │   │   │   │   │   │   ├── n_days_away.sql
+│   │   │   │   │   │   │   │   ├── next_month_name.sql
+│   │   │   │   │   │   │   │   ├── next_month_number.sql
+│   │   │   │   │   │   │   │   ├── next_month.sql
+│   │   │   │   │   │   │   │   ├── next_week.sql
+│   │   │   │   │   │   │   │   ├── n_months_ago.sql
+│   │   │   │   │   │   │   │   ├── n_months_away.sql
+│   │   │   │   │   │   │   │   ├── now.sql
+│   │   │   │   │   │   │   │   ├── n_weeks_ago.sql
+│   │   │   │   │   │   │   │   ├── n_weeks_away.sql
+│   │   │   │   │   │   │   │   ├── periods_since.sql
+│   │   │   │   │   │   │   │   ├── round_timestamp.sql
+│   │   │   │   │   │   │   │   ├── today.sql
+│   │   │   │   │   │   │   │   ├── tomorrow.sql
+│   │   │   │   │   │   │   │   ├── to_unixtimestamp.sql
+│   │   │   │   │   │   │   │   ├── week_end.sql
+│   │   │   │   │   │   │   │   ├── week_of_year.sql
+│   │   │   │   │   │   │   │   ├── week_start.sql
+│   │   │   │   │   │   │   │   └── yesterday.sql
+│   │   │   │   │   │   │   ├── fiscal_date
+│   │   │   │   │   │   │   │   ├── get_fiscal_periods.sql
+│   │   │   │   │   │   │   │   └── get_fiscal_year_dates.sql
+│   │   │   │   │   │   │   ├── get_base_dates.sql
+│   │   │   │   │   │   │   ├── get_date_dimension.sql
+│   │   │   │   │   │   │   └── _utils
+│   │   │   │   │   │   │       ├── date_spine.sql
+│   │   │   │   │   │   │       ├── generate_series.sql
+│   │   │   │   │   │   │       └── modules_datetime.sql
+│   │   │   │   │   │   ├── packages.yml
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── dbt_expectations
+│   │   │   │   │   │   ├── CHANGELOG.md
+│   │   │   │   │   │   ├── data
+│   │   │   │   │   │   ├── dbt_project.yml
+│   │   │   │   │   │   ├── dev-requirements.txt
+│   │   │   │   │   │   ├── docs
+│   │   │   │   │   │   │   ├── catalog.json
+│   │   │   │   │   │   │   ├── index.html
+│   │   │   │   │   │   │   ├── manifest.json
+│   │   │   │   │   │   │   └── run_results.json
+│   │   │   │   │   │   ├── integration_tests
+│   │   │   │   │   │   │   ├── ci
+│   │   │   │   │   │   │   │   └── profiles.yml
+│   │   │   │   │   │   │   ├── dbt_project.yml
+│   │   │   │   │   │   │   ├── docker
+│   │   │   │   │   │   │   │   ├── hive-site.xml
+│   │   │   │   │   │   │   │   └── spark-defaults.conf
+│   │   │   │   │   │   │   ├── docker-compose.yml
+│   │   │   │   │   │   │   ├── docker-start.sh
+│   │   │   │   │   │   │   ├── docker-stop.sh
+│   │   │   │   │   │   │   ├── macros
+│   │   │   │   │   │   │   │   └── get_custom_schema.sql
+│   │   │   │   │   │   │   ├── models
+│   │   │   │   │   │   │   │   └── schema_tests
+│   │   │   │   │   │   │   │       ├── data_test_factored.sql
+│   │   │   │   │   │   │   │       ├── data_test.sql
+│   │   │   │   │   │   │   │       ├── data_text.sql
+│   │   │   │   │   │   │   │       ├── schema.yml
+│   │   │   │   │   │   │   │       ├── series_10.sql
+│   │   │   │   │   │   │   │       ├── series_4.sql
+│   │   │   │   │   │   │   │       ├── timeseries_base.sql
+│   │   │   │   │   │   │   │       ├── timeseries_data_extended.sql
+│   │   │   │   │   │   │   │       ├── timeseries_data_grouped.sql
+│   │   │   │   │   │   │   │       ├── timeseries_data.sql
+│   │   │   │   │   │   │   │       ├── timeseries_hourly_data_extended.sql
+│   │   │   │   │   │   │   │       ├── timeseries_hourly.sql
+│   │   │   │   │   │   │   │       └── window_function_test.sql
+│   │   │   │   │   │   │   ├── packages.yml
+│   │   │   │   │   │   │   ├── profiles.yml
+│   │   │   │   │   │   │   └── test.sh
+│   │   │   │   │   │   ├── LICENSE
+│   │   │   │   │   │   ├── macros
+│   │   │   │   │   │   │   ├── math
+│   │   │   │   │   │   │   │   ├── log_natural.sql
+│   │   │   │   │   │   │   │   ├── median.sql
+│   │   │   │   │   │   │   │   ├── percentile_cont.sql
+│   │   │   │   │   │   │   │   └── rand.sql
+│   │   │   │   │   │   │   ├── regex
+│   │   │   │   │   │   │   │   └── regexp_instr.sql
+│   │   │   │   │   │   │   ├── schema_tests
+│   │   │   │   │   │   │   │   ├── aggregate_functions
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_count_to_be_greater_than.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_count_to_be_less_than.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_count_to_equal_other_table.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_count_to_equal.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_values_to_be_in_set.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_values_to_contain_set.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_distinct_values_to_equal_set.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_max_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_mean_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_median_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_min_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_most_common_value_to_be_in_set.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_proportion_of_unique_values_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_quantile_values_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_stdev_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_sum_to_be_between.sql
+│   │   │   │   │   │   │   │   │   └── expect_column_unique_value_count_to_be_between.sql
+│   │   │   │   │   │   │   │   ├── column_values_basic
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_decreasing.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_increasing.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_in_set.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_in_type_list.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_null.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_of_type.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_unique.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_have_consistent_casing.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_not_be_in_set.sql
+│   │   │   │   │   │   │   │   │   └── expect_column_values_to_not_be_null.sql
+│   │   │   │   │   │   │   │   ├── distributional
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_within_n_moving_stdevs.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_be_within_n_stdevs.sql
+│   │   │   │   │   │   │   │   │   └── expect_row_values_to_have_data_for_every_n_datepart.sql
+│   │   │   │   │   │   │   │   ├── _generalized
+│   │   │   │   │   │   │   │   │   ├── equal_expression.sql
+│   │   │   │   │   │   │   │   │   ├── expression_between.sql
+│   │   │   │   │   │   │   │   │   ├── expression_is_true.sql
+│   │   │   │   │   │   │   │   │   ├── _ignore_row_if_expression.sql
+│   │   │   │   │   │   │   │   │   └── _truth_expression.sql
+│   │   │   │   │   │   │   │   ├── multi-column
+│   │   │   │   │   │   │   │   │   ├── expect_column_pair_values_A_to_be_greater_than_B.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_pair_values_to_be_equal.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_pair_values_to_be_in_set.sql
+│   │   │   │   │   │   │   │   │   ├── expect_compound_columns_to_be_unique.sql
+│   │   │   │   │   │   │   │   │   ├── expect_multicolumn_sum_to_equal.sql
+│   │   │   │   │   │   │   │   │   └── expect_select_column_values_to_be_unique_within_record.sql
+│   │   │   │   │   │   │   │   ├── string_matching
+│   │   │   │   │   │   │   │   │   ├── expect_column_value_lengths_to_be_between.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_value_lengths_to_equal.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_match_like_pattern_list.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_match_like_pattern.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_match_regex_list.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_match_regex.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_not_match_like_pattern_list.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_not_match_like_pattern.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_not_match_regex_list.sql
+│   │   │   │   │   │   │   │   │   ├── expect_column_values_to_not_match_regex.sql
+│   │   │   │   │   │   │   │   │   └── _get_like_pattern_expression.sql
+│   │   │   │   │   │   │   │   └── table_shape
+│   │   │   │   │   │   │   │       ├── expect_column_to_exist.sql
+│   │   │   │   │   │   │   │       ├── expect_grouped_row_values_to_have_recent_data.sql
+│   │   │   │   │   │   │   │       ├── expect_row_values_to_have_recent_data.sql
+│   │   │   │   │   │   │   │       ├── expect_table_aggregation_to_equal_other_table.sql
+│   │   │   │   │   │   │   │       ├── expect_table_column_count_to_be_between.sql
+│   │   │   │   │   │   │   │       ├── expect_table_column_count_to_equal_other_table.sql
+│   │   │   │   │   │   │   │       ├── expect_table_column_count_to_equal.sql
+│   │   │   │   │   │   │   │       ├── expect_table_columns_to_contain_set.sql
+│   │   │   │   │   │   │   │       ├── expect_table_columns_to_match_ordered_list.sql
+│   │   │   │   │   │   │   │       ├── expect_table_columns_to_match_set.sql
+│   │   │   │   │   │   │   │       ├── expect_table_columns_to_not_contain_set.sql
+│   │   │   │   │   │   │   │       ├── expect_table_row_count_to_be_between.sql
+│   │   │   │   │   │   │   │       ├── expect_table_row_count_to_equal_other_table.sql
+│   │   │   │   │   │   │   │       ├── expect_table_row_count_to_equal_other_table_times_factor.sql
+│   │   │   │   │   │   │   │       ├── expect_table_row_count_to_equal.sql
+│   │   │   │   │   │   │   │       ├── _get_column_list.sql
+│   │   │   │   │   │   │   │       └── _list_intersect.sql
+│   │   │   │   │   │   │   └── utils
+│   │   │   │   │   │   │       ├── datatypes.sql
+│   │   │   │   │   │   │       ├── groupby.sql
+│   │   │   │   │   │   │       └── md5.sql
+│   │   │   │   │   │   ├── packages.yml
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   ├── regen_docs.sh
+│   │   │   │   │   │   ├── static
+│   │   │   │   │   │   │   ├── dbt-expectations-logo.png
+│   │   │   │   │   │   │   ├── dbt-expectations-logo.svg
+│   │   │   │   │   │   │   └── expectations.gif
+│   │   │   │   │   │   ├── supported_adapters.env
+│   │   │   │   │   │   ├── tests
+│   │   │   │   │   │   └── tox.ini
+│   │   │   │   │   ├── dbt_external_tables
+│   │   │   │   │   │   ├── CHANGELOG.md
+│   │   │   │   │   │   ├── dbt_project.yml
+│   │   │   │   │   │   ├── etc
+│   │   │   │   │   │   │   └── sample_docs.png
+│   │   │   │   │   │   ├── integration_tests
+│   │   │   │   │   │   │   ├── dbt_project.yml
+│   │   │   │   │   │   │   ├── macros
+│   │   │   │   │   │   │   │   ├── common
+│   │   │   │   │   │   │   │   │   └── prep_external.sql
+│   │   │   │   │   │   │   │   └── plugins
+│   │   │   │   │   │   │   │       ├── redshift
+│   │   │   │   │   │   │   │       │   └── prep_external.sql
+│   │   │   │   │   │   │   │       ├── snowflake
+│   │   │   │   │   │   │   │       │   └── prep_external.sql
+│   │   │   │   │   │   │   │       └── sqlserver
+│   │   │   │   │   │   │   │           ├── dbt_utils_tsql.sql
+│   │   │   │   │   │   │   │           └── prep_external.sql
+│   │   │   │   │   │   │   ├── models
+│   │   │   │   │   │   │   │   ├── common
+│   │   │   │   │   │   │   │   │   └── control.yml
+│   │   │   │   │   │   │   │   └── plugins
+│   │   │   │   │   │   │   │       ├── azuresql
+│   │   │   │   │   │   │   │       │   └── azuresql_external.yml
+│   │   │   │   │   │   │   │       ├── bigquery
+│   │   │   │   │   │   │   │       │   └── bigquery_external.yml
+│   │   │   │   │   │   │   │       ├── redshift
+│   │   │   │   │   │   │   │       │   └── redshift_external.yml
+│   │   │   │   │   │   │   │       ├── snowflake
+│   │   │   │   │   │   │   │       │   ├── people_alias.sql
+│   │   │   │   │   │   │   │       │   ├── people_expression.sql
+│   │   │   │   │   │   │   │       │   └── snowflake_external.yml
+│   │   │   │   │   │   │   │       ├── spark
+│   │   │   │   │   │   │   │       │   └── spark_external.yml
+│   │   │   │   │   │   │   │       └── synapse
+│   │   │   │   │   │   │   │           └── synapse_external.yml
+│   │   │   │   │   │   │   ├── package-lock.yml
+│   │   │   │   │   │   │   ├── packages.yml
+│   │   │   │   │   │   │   ├── profiles.yml
+│   │   │   │   │   │   │   ├── public_data
+│   │   │   │   │   │   │   │   ├── capitalize_parquet.ipynb
+│   │   │   │   │   │   │   │   ├── csv
+│   │   │   │   │   │   │   │   │   ├── section=a
+│   │   │   │   │   │   │   │   │   │   └── people_a.csv
+│   │   │   │   │   │   │   │   │   ├── section=b
+│   │   │   │   │   │   │   │   │   │   └── people_b.csv
+│   │   │   │   │   │   │   │   │   ├── section=c
+│   │   │   │   │   │   │   │   │   │   └── people_c.csv
+│   │   │   │   │   │   │   │   │   └── section=d
+│   │   │   │   │   │   │   │   │       └── people_d.csv
+│   │   │   │   │   │   │   │   ├── json
+│   │   │   │   │   │   │   │   │   ├── section=a
+│   │   │   │   │   │   │   │   │   │   └── people_a.json
+│   │   │   │   │   │   │   │   │   ├── section=b
+│   │   │   │   │   │   │   │   │   │   └── people_b.json
+│   │   │   │   │   │   │   │   │   ├── section=c
+│   │   │   │   │   │   │   │   │   │   └── people_c.json
+│   │   │   │   │   │   │   │   │   └── section=d
+│   │   │   │   │   │   │   │   │       └── people_d.json
+│   │   │   │   │   │   │   │   ├── parquet
+│   │   │   │   │   │   │   │   │   ├── section=a
+│   │   │   │   │   │   │   │   │   │   └── people_a.parquet
+│   │   │   │   │   │   │   │   │   ├── section=b
+│   │   │   │   │   │   │   │   │   │   └── people_b.parquet
+│   │   │   │   │   │   │   │   │   ├── section=c
+│   │   │   │   │   │   │   │   │   │   └── people_c.parquet
+│   │   │   │   │   │   │   │   │   └── section=d
+│   │   │   │   │   │   │   │   │       └── people_d.parquet
+│   │   │   │   │   │   │   │   └── parquet_capitalized
+│   │   │   │   │   │   │   │       ├── section=a
+│   │   │   │   │   │   │   │       │   └── people_a.parquet
+│   │   │   │   │   │   │   │       ├── section=b
+│   │   │   │   │   │   │   │       │   └── people_b.parquet
+│   │   │   │   │   │   │   │       ├── section=c
+│   │   │   │   │   │   │   │       │   └── people_c.parquet
+│   │   │   │   │   │   │   │       └── section=d
+│   │   │   │   │   │   │   │           └── people_d.parquet
+│   │   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   │   ├── seeds
+│   │   │   │   │   │   │   │   └── people.csv
+│   │   │   │   │   │   │   ├── test.env.sample
+│   │   │   │   │   │   │   └── vars.env.sample
+│   │   │   │   │   │   ├── LICENSE.md
+│   │   │   │   │   │   ├── macros
+│   │   │   │   │   │   │   ├── common
+│   │   │   │   │   │   │   │   ├── create_external_schema.sql
+│   │   │   │   │   │   │   │   ├── create_external_table.sql
+│   │   │   │   │   │   │   │   ├── get_external_build_plan.sql
+│   │   │   │   │   │   │   │   ├── helpers
+│   │   │   │   │   │   │   │   │   ├── dropif.sql
+│   │   │   │   │   │   │   │   │   └── transaction.sql
+│   │   │   │   │   │   │   │   ├── refresh_external_table.sql
+│   │   │   │   │   │   │   │   ├── stage_external_sources.sql
+│   │   │   │   │   │   │   │   └── update_external_table_columns.sql
+│   │   │   │   │   │   │   └── plugins
+│   │   │   │   │   │   │       ├── bigquery
+│   │   │   │   │   │   │       │   ├── create_external_schema.sql
+│   │   │   │   │   │   │       │   ├── create_external_table.sql
+│   │   │   │   │   │   │       │   ├── get_external_build_plan.sql
+│   │   │   │   │   │   │       │   └── update_external_table_columns.sql
+│   │   │   │   │   │   │       ├── fabric
+│   │   │   │   │   │   │       │   ├── create_external_schema.sql
+│   │   │   │   │   │   │       │   ├── create_external_table.sql
+│   │   │   │   │   │   │       │   ├── get_external_build_plan.sql
+│   │   │   │   │   │   │       │   └── helpers
+│   │   │   │   │   │   │       │       └── dropif.sql
+│   │   │   │   │   │   │       ├── redshift
+│   │   │   │   │   │   │       │   ├── create_external_table.sql
+│   │   │   │   │   │   │       │   ├── get_external_build_plan.sql
+│   │   │   │   │   │   │       │   ├── helpers
+│   │   │   │   │   │   │       │   │   ├── add_partitions.sql
+│   │   │   │   │   │   │       │   │   ├── dropif.sql
+│   │   │   │   │   │   │       │   │   ├── is_ext_tbl.sql
+│   │   │   │   │   │   │       │   │   ├── paths.sql
+│   │   │   │   │   │   │       │   │   ├── render_macro.sql
+│   │   │   │   │   │   │       │   │   └── transaction.sql
+│   │   │   │   │   │   │       │   └── refresh_external_table.sql
+│   │   │   │   │   │   │       ├── snowflake
+│   │   │   │   │   │   │       │   ├── create_external_schema.sql
+│   │   │   │   │   │   │       │   ├── create_external_table.sql
+│   │   │   │   │   │   │       │   ├── get_external_build_plan.sql
+│   │   │   │   │   │   │       │   ├── helpers
+│   │   │   │   │   │   │       │   │   └── is_csv.sql
+│   │   │   │   │   │   │       │   ├── refresh_external_table.sql
+│   │   │   │   │   │   │       │   └── snowpipe
+│   │   │   │   │   │   │       │       ├── create_empty_table.sql
+│   │   │   │   │   │   │       │       ├── create_snowpipe.sql
+│   │   │   │   │   │   │       │       ├── get_copy_sql.sql
+│   │   │   │   │   │   │       │       └── refresh_snowpipe.sql
+│   │   │   │   │   │   │       └── spark
+│   │   │   │   │   │   │           ├── create_external_table.sql
+│   │   │   │   │   │   │           ├── get_external_build_plan.sql
+│   │   │   │   │   │   │           ├── helpers
+│   │   │   │   │   │   │           │   ├── dropif.sql
+│   │   │   │   │   │   │           │   └── recover_partitions.sql
+│   │   │   │   │   │   │           └── refresh_external_table.sql
+│   │   │   │   │   │   ├── pyproject.toml
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   ├── RELEASE.md
+│   │   │   │   │   │   ├── run_test.sh
+│   │   │   │   │   │   ├── sample_analysis
+│   │   │   │   │   │   │   └── external_sources_dry_run.sql
+│   │   │   │   │   │   ├── sample_sources
+│   │   │   │   │   │   │   ├── bigquery.yml
+│   │   │   │   │   │   │   ├── redshift.yml
+│   │   │   │   │   │   │   ├── snowflake.yml
+│   │   │   │   │   │   │   ├── spark.yml
+│   │   │   │   │   │   │   └── synapse.yml
+│   │   │   │   │   │   ├── supported_adapters.env
+│   │   │   │   │   │   ├── tox.ini
+│   │   │   │   │   │   └── uv.lock
+│   │   │   │   │   └── dbt_utils
+│   │   │   │   │       ├── CHANGELOG.md
+│   │   │   │   │       ├── CONTRIBUTING.md
+│   │   │   │   │       ├── dbt_project.yml
+│   │   │   │   │       ├── dev-requirements.txt
+│   │   │   │   │       ├── docker-compose.yml
+│   │   │   │   │       ├── docs
+│   │   │   │   │       │   └── decisions
+│   │   │   │   │       │       ├── adr-0000-documenting-architecture-decisions.md
+│   │   │   │   │       │       ├── adr-0001-decision-record-format.md
+│   │   │   │   │       │       ├── adr-0002-cross-database-utils.md
+│   │   │   │   │       │       └── README.md
+│   │   │   │   │       ├── integration_tests
+│   │   │   │   │       │   ├── data
+│   │   │   │   │       │   │   ├── datetime
+│   │   │   │   │       │   │   │   └── data_date_spine.csv
+│   │   │   │   │       │   │   ├── etc
+│   │   │   │   │       │   │   │   └── data_people.csv
+│   │   │   │   │       │   │   ├── geo
+│   │   │   │   │       │   │   │   ├── data_haversine_km.csv
+│   │   │   │   │       │   │   │   └── data_haversine_mi.csv
+│   │   │   │   │       │   │   ├── schema_tests
+│   │   │   │   │       │   │   │   ├── data_cardinality_equality_a.csv
+│   │   │   │   │       │   │   │   ├── data_cardinality_equality_b.csv
+│   │   │   │   │       │   │   │   ├── data_not_null_proportion.csv
+│   │   │   │   │       │   │   │   ├── data_test_accepted_range.csv
+│   │   │   │   │       │   │   │   ├── data_test_at_least_one.csv
+│   │   │   │   │       │   │   │   ├── data_test_equality_a.csv
+│   │   │   │   │       │   │   │   ├── data_test_equality_b.csv
+│   │   │   │   │       │   │   │   ├── data_test_equality_floats_a.csv
+│   │   │   │   │       │   │   │   ├── data_test_equality_floats_b.csv
+│   │   │   │   │       │   │   │   ├── data_test_equality_floats_columns_a.csv
+│   │   │   │   │       │   │   │   ├── data_test_equality_floats_columns_b.csv
+│   │   │   │   │       │   │   │   ├── data_test_equal_rowcount.csv
+│   │   │   │   │       │   │   │   ├── data_test_expression_is_true.csv
+│   │   │   │   │       │   │   │   ├── data_test_fewer_rows_than_table_1.csv
+│   │   │   │   │       │   │   │   ├── data_test_fewer_rows_than_table_2.csv
+│   │   │   │   │       │   │   │   ├── data_test_mutually_exclusive_ranges_no_gaps.csv
+│   │   │   │   │       │   │   │   ├── data_test_mutually_exclusive_ranges_with_gaps.csv
+│   │   │   │   │       │   │   │   ├── data_test_mutually_exclusive_ranges_with_gaps_zero_length.csv
+│   │   │   │   │       │   │   │   ├── data_test_not_accepted_values.csv
+│   │   │   │   │       │   │   │   ├── data_test_not_constant.csv
+│   │   │   │   │       │   │   │   ├── data_test_relationships_where_table_1.csv
+│   │   │   │   │       │   │   │   ├── data_test_relationships_where_table_2.csv
+│   │   │   │   │       │   │   │   ├── data_test_sequential_timestamps.csv
+│   │   │   │   │       │   │   │   ├── data_test_sequential_values.csv
+│   │   │   │   │       │   │   │   ├── data_unique_combination_of_columns.csv
+│   │   │   │   │       │   │   │   └── schema.yml
+│   │   │   │   │       │   │   ├── sql
+│   │   │   │   │       │   │   │   ├── data_deduplicate.csv
+│   │   │   │   │       │   │   │   ├── data_deduplicate_expected.csv
+│   │   │   │   │       │   │   │   ├── data_events_20180101.csv
+│   │   │   │   │       │   │   │   ├── data_events_20180102.csv
+│   │   │   │   │       │   │   │   ├── data_events_20180103.csv
+│   │   │   │   │       │   │   │   ├── data_filtered_columns_in_relation.csv
+│   │   │   │   │       │   │   │   ├── data_filtered_columns_in_relation_expected.csv
+│   │   │   │   │       │   │   │   ├── data_generate_series.csv
+│   │   │   │   │       │   │   │   ├── data_generate_surrogate_key.csv
+│   │   │   │   │       │   │   │   ├── data_get_column_values.csv
+│   │   │   │   │       │   │   │   ├── data_get_column_values_dropped.csv
+│   │   │   │   │       │   │   │   ├── data_get_column_values_where.csv
+│   │   │   │   │       │   │   │   ├── data_get_column_values_where_expected.csv
+│   │   │   │   │       │   │   │   ├── data_get_query_results_as_dict.csv
+│   │   │   │   │       │   │   │   ├── data_get_single_value.csv
+│   │   │   │   │       │   │   │   ├── data_nullcheck_table.csv
+│   │   │   │   │       │   │   │   ├── data_pivot.csv
+│   │   │   │   │       │   │   │   ├── data_pivot_expected_apostrophe.csv
+│   │   │   │   │       │   │   │   ├── data_pivot_expected.csv
+│   │   │   │   │       │   │   │   ├── data_safe_add.csv
+│   │   │   │   │       │   │   │   ├── data_safe_divide.csv
+│   │   │   │   │       │   │   │   ├── data_safe_divide_denominator_expressions.csv
+│   │   │   │   │       │   │   │   ├── data_safe_divide_numerator_expressions.csv
+│   │   │   │   │       │   │   │   ├── data_safe_subtract.csv
+│   │   │   │   │       │   │   │   ├── data_star_aggregate.csv
+│   │   │   │   │       │   │   │   ├── data_star_aggregate_expected.csv
+│   │   │   │   │       │   │   │   ├── data_star.csv
+│   │   │   │   │       │   │   │   ├── data_star_expected.csv
+│   │   │   │   │       │   │   │   ├── data_star_prefix_suffix_expected.csv
+│   │   │   │   │       │   │   │   ├── data_star_quote_identifiers.csv
+│   │   │   │   │       │   │   │   ├── data_union_events_expected.csv
+│   │   │   │   │       │   │   │   ├── data_union_exclude_expected.csv
+│   │   │   │   │       │   │   │   ├── data_union_expected.csv
+│   │   │   │   │       │   │   │   ├── data_union_table_1.csv
+│   │   │   │   │       │   │   │   ├── data_union_table_2.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot_bool.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot_bool_expected.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot_expected.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot_original_api_expected.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot_quote.csv
+│   │   │   │   │       │   │   │   ├── data_unpivot_quote_expected.csv
+│   │   │   │   │       │   │   │   └── data_width_bucket.csv
+│   │   │   │   │       │   │   └── web
+│   │   │   │   │       │   │       ├── data_url_host.csv
+│   │   │   │   │       │   │       ├── data_url_path.csv
+│   │   │   │   │       │   │       └── data_urls.csv
+│   │   │   │   │       │   ├── dbt_project.yml
+│   │   │   │   │       │   ├── macros
+│   │   │   │   │       │   │   ├── assert_equal_values.sql
+│   │   │   │   │       │   │   ├── limit_zero.sql
+│   │   │   │   │       │   │   └── tests.sql
+│   │   │   │   │       │   ├── models
+│   │   │   │   │       │   │   ├── datetime
+│   │   │   │   │       │   │   │   ├── schema.yml
+│   │   │   │   │       │   │   │   └── test_date_spine.sql
+│   │   │   │   │       │   │   ├── generic_tests
+│   │   │   │   │       │   │   │   ├── equality_less_columns.sql
+│   │   │   │   │       │   │   │   ├── recency_time_excluded.sql
+│   │   │   │   │       │   │   │   ├── recency_time_included.sql
+│   │   │   │   │       │   │   │   ├── schema.yml
+│   │   │   │   │       │   │   │   ├── test_equal_column_subset.sql
+│   │   │   │   │       │   │   │   ├── test_equal_rowcount.sql
+│   │   │   │   │       │   │   │   └── test_fewer_rows_than.sql
+│   │   │   │   │       │   │   ├── geo
+│   │   │   │   │       │   │   │   ├── schema.yml
+│   │   │   │   │       │   │   │   ├── test_haversine_distance_km.sql
+│   │   │   │   │       │   │   │   └── test_haversine_distance_mi.sql
+│   │   │   │   │       │   │   ├── sql
+│   │   │   │   │       │   │   │   ├── schema.yml
+│   │   │   │   │       │   │   │   ├── test_deduplicate.sql
+│   │   │   │   │       │   │   │   ├── test_generate_series.sql
+│   │   │   │   │       │   │   │   ├── test_generate_surrogate_key.sql
+│   │   │   │   │       │   │   │   ├── test_get_column_values.sql
+│   │   │   │   │       │   │   │   ├── test_get_column_values_where.sql
+│   │   │   │   │       │   │   │   ├── test_get_filtered_columns_in_relation.sql
+│   │   │   │   │       │   │   │   ├── test_get_relations_by_pattern.sql
+│   │   │   │   │       │   │   │   ├── test_get_relations_by_prefix_and_union.sql
+│   │   │   │   │       │   │   │   ├── test_get_single_value_default.sql
+│   │   │   │   │       │   │   │   ├── test_get_single_value.sql
+│   │   │   │   │       │   │   │   ├── test_groupby.sql
+│   │   │   │   │       │   │   │   ├── test_not_empty_string_failing.sql
+│   │   │   │   │       │   │   │   ├── test_not_empty_string_passing.sql
+│   │   │   │   │       │   │   │   ├── test_nullcheck_table.sql
+│   │   │   │   │       │   │   │   ├── test_pivot_apostrophe.sql
+│   │   │   │   │       │   │   │   ├── test_pivot.sql
+│   │   │   │   │       │   │   │   ├── test_safe_add.sql
+│   │   │   │   │       │   │   │   ├── test_safe_divide.sql
+│   │   │   │   │       │   │   │   ├── test_safe_subtract.sql
+│   │   │   │   │       │   │   │   ├── test_star_aggregate.sql
+│   │   │   │   │       │   │   │   ├── test_star_no_columns.sql
+│   │   │   │   │       │   │   │   ├── test_star_prefix_suffix.sql
+│   │   │   │   │       │   │   │   ├── test_star_quote_identifiers.sql
+│   │   │   │   │       │   │   │   ├── test_star.sql
+│   │   │   │   │       │   │   │   ├── test_star_uppercase.sql
+│   │   │   │   │       │   │   │   ├── test_union_base.sql
+│   │   │   │   │       │   │   │   ├── test_union_exclude_base_lowercase.sql
+│   │   │   │   │       │   │   │   ├── test_union_exclude_base_uppercase.sql
+│   │   │   │   │       │   │   │   ├── test_union_exclude_lowercase.sql
+│   │   │   │   │       │   │   │   ├── test_union_exclude_uppercase.sql
+│   │   │   │   │       │   │   │   ├── test_union_no_source_column.sql
+│   │   │   │   │       │   │   │   ├── test_union.sql
+│   │   │   │   │       │   │   │   ├── test_union_where_base.sql
+│   │   │   │   │       │   │   │   ├── test_union_where.sql
+│   │   │   │   │       │   │   │   ├── test_unpivot_bool.sql
+│   │   │   │   │       │   │   │   ├── test_unpivot_quote.sql
+│   │   │   │   │       │   │   │   ├── test_unpivot.sql
+│   │   │   │   │       │   │   │   └── test_width_bucket.sql
+│   │   │   │   │       │   │   └── web
+│   │   │   │   │       │   │       ├── schema.yml
+│   │   │   │   │       │   │       ├── test_url_host.sql
+│   │   │   │   │       │   │       ├── test_url_path.sql
+│   │   │   │   │       │   │       └── test_urls.sql
+│   │   │   │   │       │   ├── package-lock.yml
+│   │   │   │   │       │   ├── packages.yml
+│   │   │   │   │       │   ├── profiles.yml
+│   │   │   │   │       │   ├── README.md
+│   │   │   │   │       │   └── tests
+│   │   │   │   │       │       ├── assert_get_query_results_as_dict_objects_equal.sql
+│   │   │   │   │       │       ├── generic
+│   │   │   │   │       │       │   └── expect_table_columns_to_match_set.sql
+│   │   │   │   │       │       ├── jinja_helpers
+│   │   │   │   │       │       │   ├── assert_pretty_output_msg_is_string.sql
+│   │   │   │   │       │       │   ├── assert_pretty_time_is_string.sql
+│   │   │   │   │       │       │   └── test_slugify.sql
+│   │   │   │   │       │       └── sql
+│   │   │   │   │       │           ├── test_get_column_values_use_default.sql
+│   │   │   │   │       │           └── test_get_single_value_multiple_rows.sql
+│   │   │   │   │       ├── LICENSE
+│   │   │   │   │       ├── macros
+│   │   │   │   │       │   ├── generic_tests
+│   │   │   │   │       │   │   ├── accepted_range.sql
+│   │   │   │   │       │   │   ├── at_least_one.sql
+│   │   │   │   │       │   │   ├── cardinality_equality.sql
+│   │   │   │   │       │   │   ├── equality.sql
+│   │   │   │   │       │   │   ├── equal_rowcount.sql
+│   │   │   │   │       │   │   ├── expression_is_true.sql
+│   │   │   │   │       │   │   ├── fewer_rows_than.sql
+│   │   │   │   │       │   │   ├── mutually_exclusive_ranges.sql
+│   │   │   │   │       │   │   ├── not_accepted_values.sql
+│   │   │   │   │       │   │   ├── not_constant.sql
+│   │   │   │   │       │   │   ├── not_empty_string.sql
+│   │   │   │   │       │   │   ├── not_null_proportion.sql
+│   │   │   │   │       │   │   ├── recency.sql
+│   │   │   │   │       │   │   ├── relationships_where.sql
+│   │   │   │   │       │   │   ├── sequential_values.sql
+│   │   │   │   │       │   │   └── unique_combination_of_columns.sql
+│   │   │   │   │       │   ├── jinja_helpers
+│   │   │   │   │       │   │   ├── _is_ephemeral.sql
+│   │   │   │   │       │   │   ├── _is_relation.sql
+│   │   │   │   │       │   │   ├── log_info.sql
+│   │   │   │   │       │   │   ├── pretty_log_format.sql
+│   │   │   │   │       │   │   ├── pretty_time.sql
+│   │   │   │   │       │   │   └── slugify.sql
+│   │   │   │   │       │   ├── sql
+│   │   │   │   │       │   │   ├── date_spine.sql
+│   │   │   │   │       │   │   ├── deduplicate.sql
+│   │   │   │   │       │   │   ├── generate_series.sql
+│   │   │   │   │       │   │   ├── generate_surrogate_key.sql
+│   │   │   │   │       │   │   ├── get_column_values.sql
+│   │   │   │   │       │   │   ├── get_filtered_columns_in_relation.sql
+│   │   │   │   │       │   │   ├── get_query_results_as_dict.sql
+│   │   │   │   │       │   │   ├── get_relations_by_pattern.sql
+│   │   │   │   │       │   │   ├── get_relations_by_prefix.sql
+│   │   │   │   │       │   │   ├── get_single_value.sql
+│   │   │   │   │       │   │   ├── get_tables_by_pattern_sql.sql
+│   │   │   │   │       │   │   ├── get_tables_by_prefix_sql.sql
+│   │   │   │   │       │   │   ├── get_table_types_sql.sql
+│   │   │   │   │       │   │   ├── groupby.sql
+│   │   │   │   │       │   │   ├── haversine_distance.sql
+│   │   │   │   │       │   │   ├── nullcheck.sql
+│   │   │   │   │       │   │   ├── nullcheck_table.sql
+│   │   │   │   │       │   │   ├── pivot.sql
+│   │   │   │   │       │   │   ├── safe_add.sql
+│   │   │   │   │       │   │   ├── safe_divide.sql
+│   │   │   │   │       │   │   ├── safe_subtract.sql
+│   │   │   │   │       │   │   ├── star.sql
+│   │   │   │   │       │   │   ├── surrogate_key.sql
+│   │   │   │   │       │   │   ├── union.sql
+│   │   │   │   │       │   │   ├── unpivot.sql
+│   │   │   │   │       │   │   └── width_bucket.sql
+│   │   │   │   │       │   └── web
+│   │   │   │   │       │       ├── get_url_host.sql
+│   │   │   │   │       │       ├── get_url_parameter.sql
+│   │   │   │   │       │       └── get_url_path.sql
+│   │   │   │   │       ├── Makefile
+│   │   │   │   │       ├── pytest.ini
+│   │   │   │   │       ├── README.md
+│   │   │   │   │       ├── RELEASE.md
+│   │   │   │   │       ├── run_functional_test.sh
+│   │   │   │   │       ├── run_test.sh
+│   │   │   │   │       ├── supported_adapters.env
+│   │   │   │   │       └── tox.ini
+│   │   │   │   ├── dbt_project.yml
+│   │   │   │   ├── logs
+│   │   │   │   │   └── dbt.log
+│   │   │   │   ├── macros
+│   │   │   │   │   ├── calculate_patient_age.sql
+│   │   │   │   │   ├── expand_date_columns.sql
+│   │   │   │   │   ├── expand_date_columns.yml
+│   │   │   │   │   ├── expand_timestamp_columns.sql
+│   │   │   │   │   └── expand_timestamp_columns.yml
+│   │   │   │   ├── models
+│   │   │   │   │   ├── intermediate
+│   │   │   │   │   │   ├── int_organizations.sql
+│   │   │   │   │   │   ├── int_organizations.yml
+│   │   │   │   │   │   ├── int_patient_conditions.sql
+│   │   │   │   │   │   ├── int_patient_conditions.yml
+│   │   │   │   │   │   ├── int_patient_encounters.sql
+│   │   │   │   │   │   ├── int_patient_encounters.yml
+│   │   │   │   │   │   ├── int_patient_medications.sql
+│   │   │   │   │   │   ├── int_patient_medications.yml
+│   │   │   │   │   │   ├── int_patients.sql
+│   │   │   │   │   │   ├── int_patients.yml
+│   │   │   │   │   │   ├── int_providers.sql
+│   │   │   │   │   │   └── int_providers.yml
+│   │   │   │   │   ├── marts
+│   │   │   │   │   │   ├── dim_conditions.sql
+│   │   │   │   │   │   ├── dim_medications.sql
+│   │   │   │   │   │   ├── dim_organizations.sql
+│   │   │   │   │   │   ├── dim_patients.sql
+│   │   │   │   │   │   ├── dim_providers.sql
+│   │   │   │   │   │   ├── fact_patient_conditions.sql
+│   │   │   │   │   │   ├── fact_patient_conditions.yml
+│   │   │   │   │   │   ├── fact_patient_encounter_readmissions.sql
+│   │   │   │   │   │   ├── fact_patient_encounters_by_month.sql
+│   │   │   │   │   │   ├── fact_patient_encounters.sql
+│   │   │   │   │   │   ├── fact_patient_encounters.yml
+│   │   │   │   │   │   ├── fact_patient_medications.sql
+│   │   │   │   │   │   ├── fact_patient_medications.yml
+│   │   │   │   │   │   └── fact_top_medications_by_patient_age_group.sql
+│   │   │   │   │   └── staging
+│   │   │   │   │       └── emr
+│   │   │   │   │           ├── _emr__sources.yml
+│   │   │   │   │           ├── stg_emr__conditions.sql
+│   │   │   │   │           ├── stg_emr__conditions.yml
+│   │   │   │   │           ├── stg_emr__encounters.sql
+│   │   │   │   │           ├── stg_emr__encounters.yml
+│   │   │   │   │           ├── stg_emr__medications.sql
+│   │   │   │   │           ├── stg_emr__medications.yml
+│   │   │   │   │           ├── stg_emr__organizations.sql
+│   │   │   │   │           ├── stg_emr__organizations.yml
+│   │   │   │   │           ├── stg_emr__patients.sql
+│   │   │   │   │           ├── stg_emr__patients.yml
+│   │   │   │   │           ├── stg_emr__providers.sql
+│   │   │   │   │           └── stg_emr__providers.yml
+│   │   │   │   ├── package-lock.yml
+│   │   │   │   ├── packages.yml
+│   │   │   │   ├── README.md
+│   │   │   │   ├── run_local.sh
+│   │   │   │   ├── seeds
+│   │   │   │   │   └── age_group.csv
+│   │   │   │   ├── snapshots
+│   │   │   │   ├── target
+│   │   │   │   │   ├── compiled
+│   │   │   │   │   │   └── emr_analytics
+│   │   │   │   │   │       ├── analyses
+│   │   │   │   │   │       │   ├── check_int_encounters.sql
+│   │   │   │   │   │       │   ├── patient_readmissions.sql
+│   │   │   │   │   │       │   ├── raw_patients.sql
+│   │   │   │   │   │       │   ├── stg_customers_review.sql
+│   │   │   │   │   │       │   ├── stg_medications.sql
+│   │   │   │   │   │       │   └── top_medicaitons.sql
+│   │   │   │   │   │       └── models
+│   │   │   │   │   │           ├── intermediate
+│   │   │   │   │   │           │   ├── int_organizations.sql
+│   │   │   │   │   │           │   ├── int_organizations.yml
+│   │   │   │   │   │           │   │   ├── not_null_int_organizations_organization_id.sql
+│   │   │   │   │   │           │   │   └── unique_int_organizations_organization_id.sql
+│   │   │   │   │   │           │   ├── int_patient_conditions.sql
+│   │   │   │   │   │           │   ├── int_patient_conditions.yml
+│   │   │   │   │   │           │   │   └── dbt_utils_unique_combination_o_5ab5285ced5057f4776b2237cb879952.sql
+│   │   │   │   │   │           │   ├── int_patient_encounters.sql
+│   │   │   │   │   │           │   ├── int_patient_encounters.yml
+│   │   │   │   │   │           │   │   ├── not_null_int_patient_encounters_encounter_id.sql
+│   │   │   │   │   │           │   │   └── unique_int_patient_encounters_encounter_id.sql
+│   │   │   │   │   │           │   ├── int_patient_medications.sql
+│   │   │   │   │   │           │   ├── int_patient_medications.yml
+│   │   │   │   │   │           │   │   ├── dbt_utils_unique_combination_o_0ad6546936b812c97efb186c01149b7f.sql
+│   │   │   │   │   │           │   │   ├── dbt_utils_unique_combination_o_f01bbeb88a111286f62e028844ebb96c.sql
+│   │   │   │   │   │           │   │   ├── not_null_int_patient_medications_medication_code.sql
+│   │   │   │   │   │           │   │   ├── not_null_int_patient_medications_patient_id.sql
+│   │   │   │   │   │           │   │   ├── not_null_int_patient_medications_patient_medication_id.sql
+│   │   │   │   │   │           │   │   └── unique_int_patient_medications_patient_medication_id.sql
+│   │   │   │   │   │           │   ├── int_patients.sql
+│   │   │   │   │   │           │   ├── int_patients.yml
+│   │   │   │   │   │           │   │   ├── not_null_int_patients_patient_id.sql
+│   │   │   │   │   │           │   │   └── unique_int_patients_patient_id.sql
+│   │   │   │   │   │           │   ├── int_providers.sql
+│   │   │   │   │   │           │   └── int_providers.yml
+│   │   │   │   │   │           │       ├── not_null_int_providers_provider_id.sql
+│   │   │   │   │   │           │       └── unique_int_providers_provider_id.sql
+│   │   │   │   │   │           ├── marts
+│   │   │   │   │   │           │   ├── dim_conditions.sql
+│   │   │   │   │   │           │   ├── dim_medications.sql
+│   │   │   │   │   │           │   ├── dim_organizations.sql
+│   │   │   │   │   │           │   ├── dim_patients.sql
+│   │   │   │   │   │           │   ├── dim_providers.sql
+│   │   │   │   │   │           │   ├── fact_medications.sql
+│   │   │   │   │   │           │   ├── fact_patient_conditions.sql
+│   │   │   │   │   │           │   ├── fact_patient_encounter_readmissions.sql
+│   │   │   │   │   │           │   ├── fact_patient_encounters_by_month.sql
+│   │   │   │   │   │           │   ├── fact_patient_encounters.sql
+│   │   │   │   │   │           │   ├── fact_patient_encounters.yml
+│   │   │   │   │   │           │   │   ├── not_null_fact_patient_encounters_encounter_id.sql
+│   │   │   │   │   │           │   │   ├── not_null_fact_patient_encounters_ingested_at.sql
+│   │   │   │   │   │           │   │   ├── not_null_fact_patient_encounters_patient_id.sql
+│   │   │   │   │   │           │   │   ├── not_null_fact_patient_encounters_start_at.sql
+│   │   │   │   │   │           │   │   ├── not_null_fact_patient_encounters_start_date.sql
+│   │   │   │   │   │           │   │   └── unique_fact_patient_encounters_encounter_id.sql
+│   │   │   │   │   │           │   ├── fact_patient_medications.sql
+│   │   │   │   │   │           │   └── fact_top_medications_by_patient_age_group.sql
+│   │   │   │   │   │           └── staging
+│   │   │   │   │   │               └── emr
+│   │   │   │   │   │                   ├── stg_emr__conditions.sql
+│   │   │   │   │   │                   ├── stg_emr__conditions.yml
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_841b2c54117e1887f08f1e7de46f3e94.sql
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_f946696ab769adc438c061231efc4382.sql
+│   │   │   │   │   │                   │   ├── dbt_utils_unique_combination_o_6d321dc01e8f1ba62f1e3afd92b5dae0.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__conditions_condition_code.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__conditions_encounter_id.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__conditions_patient_id.sql
+│   │   │   │   │   │                   │   └── not_null_stg_emr__conditions_start_date.sql
+│   │   │   │   │   │                   ├── stg_emr__encounters.sql
+│   │   │   │   │   │                   ├── stg_emr__encounters.yml
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_6343aa9e4e36f4b5c8b3e27f6e15a790.sql
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_837737a57a890cf87ebe12395e3eb91a.sql
+│   │   │   │   │   │                   │   ├── dbt_utils_unique_combination_o_9fb51462ae80f17b6746b4c790be27f1.sql
+│   │   │   │   │   │                   │   └── not_null_stg_emr__encounters_encounter_id.sql
+│   │   │   │   │   │                   ├── stg_emr__medications.sql
+│   │   │   │   │   │                   ├── stg_emr__medications.yml
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_7e23269df3fe7f5de95ce7cd2a2028cc.sql
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_e149812b14f9ff9131e303bf44ee8656.sql
+│   │   │   │   │   │                   │   ├── dbt_utils_unique_combination_o_331523476858cfa09f5f6165dc7ecc14.sql
+│   │   │   │   │   │                   │   ├── dbt_utils_unique_combination_o_bddc2ed186be93a1a7f01000e326f212.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__medications_encounter_id.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__medications_medication_code.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__medications_patient_id.sql
+│   │   │   │   │   │                   │   └── not_null_stg_emr__medications_start_date.sql
+│   │   │   │   │   │                   ├── stg_emr__organizations.sql
+│   │   │   │   │   │                   ├── stg_emr__organizations.yml
+│   │   │   │   │   │                   │   ├── dbt_utils_unique_combination_o_31fe756891540084e5519e50d0b12031.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__organizations_name.sql
+│   │   │   │   │   │                   │   └── not_null_stg_emr__organizations_organization_id.sql
+│   │   │   │   │   │                   ├── stg_emr__patients.sql
+│   │   │   │   │   │                   ├── stg_emr__patients.yml
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_351bbe225ff9e48f2460e853b20542bc.sql
+│   │   │   │   │   │                   │   ├── dbt_expectations_expect_column_c4e5430979d1b996ba5f242892536c79.sql
+│   │   │   │   │   │                   │   ├── dbt_utils_unique_combination_o_40549e3b6feb792d41543aa74efd51b9.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__patients_birth_date.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__patients_first_name.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__patients_last_name.sql
+│   │   │   │   │   │                   │   ├── not_null_stg_emr__patients_patient_id.sql
+│   │   │   │   │   │                   │   └── not_null_stg_emr__patients_social_security_number.sql
+│   │   │   │   │   │                   ├── stg_emr__providers.sql
+│   │   │   │   │   │                   └── stg_emr__providers.yml
+│   │   │   │   │   │                       ├── dbt_utils_unique_combination_o_83d0d02925601916370a56bcc131e011.sql
+│   │   │   │   │   │                       ├── not_null_stg_emr__providers_name.sql
+│   │   │   │   │   │                       └── not_null_stg_emr__providers_provider_id.sql
+│   │   │   │   │   ├── graph.gpickle
+│   │   │   │   │   ├── graph_summary.json
+│   │   │   │   │   ├── manifest.json
+│   │   │   │   │   ├── partial_parse.msgpack
+│   │   │   │   │   ├── run
+│   │   │   │   │   │   └── emr_analytics
+│   │   │   │   │   │       ├── models
+│   │   │   │   │   │       │   ├── intermediate
+│   │   │   │   │   │       │   │   ├── int_organizations.sql
+│   │   │   │   │   │       │   │   ├── int_patient_conditions.sql
+│   │   │   │   │   │       │   │   ├── int_patient_encounters.sql
+│   │   │   │   │   │       │   │   ├── int_patient_medications.sql
+│   │   │   │   │   │       │   │   ├── int_patient_medications.yml
+│   │   │   │   │   │       │   │   │   ├── dbt_utils_unique_combination_o_f01bbeb88a111286f62e028844ebb96c.sql
+│   │   │   │   │   │       │   │   │   ├── not_null_int_patient_medications_medication_code.sql
+│   │   │   │   │   │       │   │   │   ├── not_null_int_patient_medications_patient_id.sql
+│   │   │   │   │   │       │   │   │   ├── not_null_int_patient_medications_patient_medication_id.sql
+│   │   │   │   │   │       │   │   │   └── unique_int_patient_medications_patient_medication_id.sql
+│   │   │   │   │   │       │   │   ├── int_patients.sql
+│   │   │   │   │   │       │   │   └── int_providers.sql
+│   │   │   │   │   │       │   ├── marts
+│   │   │   │   │   │       │   │   ├── dim_conditions.sql
+│   │   │   │   │   │       │   │   ├── dim_medications.sql
+│   │   │   │   │   │       │   │   ├── dim_organizations.sql
+│   │   │   │   │   │       │   │   ├── dim_patients.sql
+│   │   │   │   │   │       │   │   ├── dim_providers.sql
+│   │   │   │   │   │       │   │   ├── fact_medications.sql
+│   │   │   │   │   │       │   │   ├── fact_patient_conditions.sql
+│   │   │   │   │   │       │   │   ├── fact_patient_encounter_readmissions.sql
+│   │   │   │   │   │       │   │   ├── fact_patient_encounters_by_month.sql
+│   │   │   │   │   │       │   │   ├── fact_patient_encounters.sql
+│   │   │   │   │   │       │   │   ├── fact_patient_medications.sql
+│   │   │   │   │   │       │   │   └── fact_top_medications_by_patient_age_group.sql
+│   │   │   │   │   │       │   └── staging
+│   │   │   │   │   │       │       └── emr
+│   │   │   │   │   │       │           ├── stg_emr__conditions.sql
+│   │   │   │   │   │       │           ├── stg_emr__encounters.sql
+│   │   │   │   │   │       │           ├── stg_emr__medications.sql
+│   │   │   │   │   │       │           ├── stg_emr__medications.yml
+│   │   │   │   │   │       │           │   ├── dbt_expectations_expect_column_7e23269df3fe7f5de95ce7cd2a2028cc.sql
+│   │   │   │   │   │       │           │   ├── dbt_expectations_expect_column_e149812b14f9ff9131e303bf44ee8656.sql
+│   │   │   │   │   │       │           │   ├── dbt_utils_unique_combination_o_bddc2ed186be93a1a7f01000e326f212.sql
+│   │   │   │   │   │       │           │   ├── not_null_stg_emr__medications_encounter_id.sql
+│   │   │   │   │   │       │           │   ├── not_null_stg_emr__medications_medication_code.sql
+│   │   │   │   │   │       │           │   ├── not_null_stg_emr__medications_patient_id.sql
+│   │   │   │   │   │       │           │   └── not_null_stg_emr__medications_start_date.sql
+│   │   │   │   │   │       │           ├── stg_emr__organizations.sql
+│   │   │   │   │   │       │           ├── stg_emr__patients.sql
+│   │   │   │   │   │       │           └── stg_emr__providers.sql
+│   │   │   │   │   │       └── seeds
+│   │   │   │   │   │           └── age_group.csv
+│   │   │   │   │   ├── run_results.json
+│   │   │   │   │   └── semantic_manifest.json
+│   │   │   │   └── tests
+│   │   │   ├── logs
+│   │   │   │   └── dbt.log
+│   │   │   └── profiles.yml
+│   │   ├── emr_analytics_pipeline.py
+│   │   └── __pycache__
+│   │       ├── dbt_dag_test.cpython-312.pyc
+│   │       ├── dbt_task_group_test.cpython-312.pyc
+│   │       ├── dummy_containerized_test_dag.cpython-312.pyc
+│   │       ├── emr_analytics_pipeline.cpython-312.pyc
+│   │       ├── ingestion_containerized_test_dag.cpython-312.pyc
+│   │       └── ingestion_test_dag.cpython-312.pyc
+│   ├── docker-compose.yaml
+│   ├── Dockerfile
+│   ├── logs
+│   │   ├── dag_id=data_ingestion_gcs
+│   │   │   ├── run_id=manual__2025-04-03T22:26:13.054195+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-03T22:41:44.850564+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-03T22:47:49.774443+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-03T22:54:20.660678+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-03T22:54:43.780561+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-03T22:56:47.553205+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T09:30:26.848198+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=local_to_gcs_task
+│   │   │   │       └── attempt=1.log
+│   │   │   └── run_id=manual__2025-04-07T09:30:59.777520+00:00
+│   │   │       ├── task_id=hello_task
+│   │   │       │   └── attempt=1.log
+│   │   │       └── task_id=local_to_gcs_task
+│   │   │           └── attempt=1.log
+│   │   ├── dag_id=dummy_containerized_test_dag
+│   │   │   ├── run_id=manual__2025-04-07T22:14:25.563143+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T22:20:52.729120+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T22:22:42.026219+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T22:24:24.577451+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=hello_world
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T22:25:17.905923+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=hello_world
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T08:53:42.205145+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=hello_world
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T09:04:42.695117+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=hello_world
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T09:51:01.356904+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=hello_world
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingesdummy_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T09:52:27.706122+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=hello_world
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingesdummy_task
+│   │   │   │       └── attempt=1.log
+│   │   │   └── run_id=manual__2025-04-08T09:53:18.985257+00:00
+│   │   │       ├── task_id=hello_task
+│   │   │       │   └── attempt=1.log
+│   │   │       └── task_id=hello_world
+│   │   │           └── attempt=1.log
+│   │   ├── dag_id=emr_analytics_pipeline_dag
+│   │   │   ├── run_id=manual__2025-04-08T20:25:58.045857+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T20:28:36.569928+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T20:36:26.754789+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T20:49:39.087533+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T22:16:37.236649+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   └── attempt=2.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T22:17:53.993634+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   └── attempt=2.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T22:25:06.107674+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-09T19:25:17.317733+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-09T20:32:20.277031+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   └── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=manual__2025-04-09T21:17:44.803043+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   └── attempt=2.log
+│   │   │   │   └── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=manual__2025-04-09T21:39:15.407042+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=manual__2025-04-09T21:59:58.736043+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-09T22:06:37.799732+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T08:25:16.128953+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T08:36:07.889936+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T08:38:13.328034+00:00
+│   │   │   │   └── task_id=dbt_stage_external_sources_task
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=manual__2025-04-10T08:44:02.426827+00:00
+│   │   │   │   └── task_id=dbt_stage_external_sources_task
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       └── attempt=2.log
+│   │   │   ├── run_id=manual__2025-04-10T09:17:28.570355+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_stage_external_sources_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T09:32:12.754369+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_stage_external_sources_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T16:56:10.683998+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   └── attempt=2.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   └── attempt=2.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T17:02:26.931676+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T17:12:48.594861+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T18:32:34.328960+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T18:44:41.132335+00:00
+│   │   │   │   └── task_id=ingestion_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T18:49:02.902320+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T18:54:11.579271+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_stage_external_sources_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T18:58:16.848349+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T19:40:08.947205+00:00
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T19:57:03.508723+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:04:25.320395+00:00
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:14:30.041791+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:35:11.533968+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:39:29.918126+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:41:04.285393+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:43:52.440449+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T20:48:04.141093+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T21:01:22.720012+00:00
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-10T21:11:47.549688+00:00
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-11T07:52:25.434326+00:00
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T17:25:59.379852+00:00
+│   │   │   │   └── task_id=ingestion_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T17:27:31.115257+00:00
+│   │   │   │   ├── task_id=dbt_run.age_group_seed
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounter_readmissions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters_by_month_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_top_medications_by_patient_age_group_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T17:42:12.859070+00:00
+│   │   │   │   └── task_id=ingestion_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T17:46:21.900227+00:00
+│   │   │   │   └── task_id=ingestion_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T17:54:03.930187+00:00
+│   │   │   │   └── task_id=ingestion_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T17:55:05.572904+00:00
+│   │   │   │   ├── task_id=dbt_run.age_group_seed
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounter_readmissions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters_by_month_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_top_medications_by_patient_age_group_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T18:07:03.806535+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T18:20:50.445732+00:00
+│   │   │   │   ├── task_id=dbt_run.age_group_seed
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounter_readmissions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters_by_month_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_top_medications_by_patient_age_group_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T18:37:04.532621+00:00
+│   │   │   │   ├── task_id=dbt_run.age_group_seed
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounter_readmissions_run
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   ├── attempt=3.log
+│   │   │   │   │   └── attempt=4.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters_by_month_run
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_top_medications_by_patient_age_group_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   ├── attempt=3.log
+│   │   │   │   │   └── attempt=4.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T19:29:27.579005+00:00
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T19:38:19.238614+00:00
+│   │   │   │   ├── task_id=dbt_run.age_group_seed
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounter_readmissions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters_by_month_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-14T20:46:27.250494+00:00
+│   │   │   │   ├── task_id=dbt_run.age_group_seed
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounter_readmissions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters_by_month_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_top_medications_by_patient_age_group_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-07T00:00:00+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-08T00:00:00+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   ├── task_id=ingestion_task
+│   │   │   │   │   ├── attempt=1.log
+│   │   │   │   │   ├── attempt=2.log
+│   │   │   │   │   └── attempt=3.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=scheduled__2025-04-09T00:00:00+00:00
+│   │   │   │   ├── task_id=dbt_run.dummy_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=dbt_run.stg_emr__patients_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-10T00:00:00+00:00
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-11T00:00:00+00:00
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-12T00:00:00+00:00
+│   │   │   │   ├── task_id=dbt_run.dim_conditions_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_organizations_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_patients_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.dim_providers_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_medications_run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.fact_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patient_medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.int_providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__conditions.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__encounters.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__medications.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__organizations.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__patients.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.run
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_run.stg_emr__providers.test
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   ├── task_id=dbt_stage_external_sources_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=transformation_task
+│   │   │   │       └── attempt=1.log
+│   │   │   └── run_id=scheduled__2025-04-13T00:00:00+00:00
+│   │   │       └── task_id=transformation_task
+│   │   │           └── attempt=1.log
+│   │   ├── dag_id=ingestion_containerized_test_dag
+│   │   │   ├── run_id=manual__2025-04-07T09:34:43.212801+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T09:41:25.906486+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T10:06:18.410143+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T10:19:41.237009+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T10:33:20.571028+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T21:50:10.525789+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T22:05:21.322924+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-07T22:08:07.758160+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T09:54:00.959073+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T09:58:27.401760+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T10:00:17.987186+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T10:05:21.650764+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T10:12:14.255820+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=manual__2025-04-08T16:25:39.497821+00:00
+│   │   │   │   ├── task_id=hello_task
+│   │   │   │   │   └── attempt=1.log
+│   │   │   │   └── task_id=ingest_emr_data
+│   │   │   │       └── attempt=1.log
+│   │   │   └── run_id=manual__2025-04-08T16:51:47.348032+00:00
+│   │   │       ├── task_id=hello_task
+│   │   │       │   └── attempt=1.log
+│   │   │       └── task_id=ingest_emr_data
+│   │   │           └── attempt=1.log
+│   │   ├── dag_id=my_cosmos_dag
+│   │   │   ├── run_id=manual__2025-04-04T00:06:50.582602+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=manual__2025-04-04T21:27:10.549956+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       └── attempt=2.log
+│   │   │   ├── run_id=manual__2025-04-04T21:37:14.546328+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       └── attempt=2.log
+│   │   │   ├── run_id=manual__2025-04-04T21:38:38.612294+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-03T00:00:00+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       ├── attempt=2.log
+│   │   │   │       └── attempt=3.log
+│   │   │   ├── run_id=scheduled__2025-04-04T00:00:00+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-05T00:00:00+00:00
+│   │   │   │   └── task_id=dummy_run
+│   │   │   │       └── attempt=1.log
+│   │   │   └── run_id=scheduled__2025-04-06T00:00:00+00:00
+│   │   │       └── task_id=dummy_run
+│   │   │           └── attempt=1.log
+│   │   ├── dag_id=my_cosmos_task_group_dag
+│   │   │   ├── run_id=manual__2025-04-04T21:54:35.146041+00:00
+│   │   │   │   └── task_id=dbt_run.dummy_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-03T00:00:00+00:00
+│   │   │   │   └── task_id=dbt_run.dummy_run
+│   │   │   │       ├── attempt=1.log
+│   │   │   │       └── attempt=2.log
+│   │   │   ├── run_id=scheduled__2025-04-04T00:00:00+00:00
+│   │   │   │   └── task_id=dbt_run.dummy_run
+│   │   │   │       └── attempt=1.log
+│   │   │   ├── run_id=scheduled__2025-04-05T00:00:00+00:00
+│   │   │   │   └── task_id=dbt_run.dummy_run
+│   │   │   │       └── attempt=1.log
+│   │   │   └── run_id=scheduled__2025-04-06T00:00:00+00:00
+│   │   │       └── task_id=dbt_run.dummy_run
+│   │   │           └── attempt=1.log
+│   │   ├── dag_processor_manager
+│   │   │   └── dag_processor_manager.log
+│   │   └── scheduler
+│   │       ├── 2025-04-03
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-04
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   ├── dbt_task_group_test.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-05
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   ├── dbt_task_group_test.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-07
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   ├── dbt_task_group_test.py.log
+│   │       │   ├── dummy_containerized_test_dag.py.log
+│   │       │   ├── ingestion_containerized_test_dag.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-08
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   ├── dbt_task_group_test.py.log
+│   │       │   ├── dummy_containerized_test_dag.py.log
+│   │       │   ├── emr_analytics_pipeline.py.log
+│   │       │   ├── ingestion_containerized_test_dag.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-09
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   ├── dbt_task_group_test.py.log
+│   │       │   ├── dummy_containerized_test_dag.py.log
+│   │       │   ├── emr_analytics_pipeline.py.log
+│   │       │   ├── ingestion_containerized_test_dag.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-10
+│   │       │   ├── dbt_dag_test.py.log
+│   │       │   ├── dbt_task_group_test.py.log
+│   │       │   ├── dummy_containerized_test_dag.py.log
+│   │       │   ├── emr_analytics_pipeline.py.log
+│   │       │   ├── ingestion_containerized_test_dag.py.log
+│   │       │   └── ingestion_test_dag.py.log
+│   │       ├── 2025-04-11
+│   │       │   └── emr_analytics_pipeline.py.log
+│   │       ├── 2025-04-12
+│   │       │   └── emr_analytics_pipeline.py.log
+│   │       ├── 2025-04-13
+│   │       │   └── emr_analytics_pipeline.py.log
+│   │       ├── 2025-04-14
+│   │       │   └── emr_analytics_pipeline.py.log
+│   │       └── latest -> 2025-04-14
+│   ├── plugins
+│   └── requirements
+│       └── base.txt
+├── logs
+│   └── dbt.log
+├── readme.md
+├── _resources
+│   └── setup.md
+│       ├── image-1.png
+│       └── image.png
+├── scripts
+│   ├── emr_ingestion
+│   │   ├── Dockerfile
+│   │   ├── emr_ingestion.py
+│   │   └── run_local.sh
+│   ├── emr_transformation
+│   │   ├── Dockerfile
+│   │   ├── emr_transformation.py
+│   │   └── run_local.sh
+│   └── synthea_generator
+│       └── Dockerfile
+├── setup.md
+├── strtree.txt
+├── terraform
+│   ├── generate_tfvars.sh
+│   ├── main.tf
+│   ├── Makefile
+│   ├── terraform.tfstate
+│   ├── terraform.tfstate.backup
+│   ├── terraform.tfvars
+│   └── variables.tf
+└── terraform.tfstate
+
+861 directories, 1370 files
