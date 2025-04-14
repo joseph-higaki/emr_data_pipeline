@@ -23,7 +23,7 @@ resource "google_bigquery_dataset" "dataset" {
 
 
 resource "google_storage_bucket" "emr_analytics_bucket" {
-  name          = local.analytics_storage_bucket_name
+  name          = var.analytics_storage_bucket_name
   location      = var.location
   force_destroy = true
   soft_delete_policy {    
