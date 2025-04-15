@@ -75,11 +75,9 @@ For testing and demonstration purposes, this project uses [Synthea™](https://s
 
 ![alt text](_resources/readme.md/image-1.png)
 
+![alt text](_resources/readme.md/image-5.png)
+
 ![alt text](_resources/readme.md/image-2.png)
-
-![alt text](_resources/readme.md/image-3.png)
-
-![alt text](_resources/readme.md/image-4.png)
 
 ## Data Mart ERD
 
@@ -199,3 +197,5 @@ emr_data_pipeline/
 ## Acknowledgments
 
 This project uses [Synthea™](https://synthea.mitre.org/), an open-source synthetic patient generator that models the medical history of synthetic patients. Synthea™ uses publicly available data to generate synthetic patients with realistic but not real medical histories. This project does not contain or use any real protected health information (PHI).
+
+
