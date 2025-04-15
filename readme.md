@@ -70,12 +70,16 @@ For testing and demonstration purposes, this project uses [Synthea™](https://s
 
 ## Data Lineage
 
-
+### Medications
 ![alt text](_resources/readme.md/image.png)
 
 ![alt text](_resources/readme.md/image-1.png)
 
+### Encounters
+
 ![alt text](_resources/readme.md/image-5.png)
+
+### Conditions
 
 ![alt text](_resources/readme.md/image-2.png)
 
