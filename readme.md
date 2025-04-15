@@ -46,14 +46,14 @@ For testing and demonstration purposes, this project uses [Synthea™](https://s
 
 ### Storage - Google Cloud Storage (GCS)
 - Raw data landing zone for EMR data
-- Provisioned automatically via Terraform
+- Provisioned automatically via [Terraform](https://developer.hashicorp.com/terraform)
 - Organized with partitioning for efficient data management
 
 ![alt text](_resources/readme.md/image-7.png)
 
 ### Data Warehouse - BigQuery
 - Database engine for EMR data transformations
-- Provisioned and configured via Terraform
+- Provisioned and configured via [Terraform](https://developer.hashicorp.com/terraform)
 
 ### Analytics Transformations - [dbt Core](https://docs.getdbt.com/docs/core/about-core-setup)
 - Runs within Airflow using Cosmos integration
