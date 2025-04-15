@@ -30,10 +30,7 @@ EXECUTION_CONFIG=ExecutionConfig(
     catchup=False,
     dag_id="emr_analytics_pipeline_dag"       
 )
-def emr_analytics_pipeline_dag():
-    hello = EmptyOperator(task_id="hello_task")
-
-    generation = EmptyOperator(task_id="generation_task")
+def emr_analytics_pipeline_dag():    
 
     ingestion = DockerOperator(
         task_id='ingestion_task',
@@ -90,11 +87,7 @@ def emr_analytics_pipeline_dag():
         execution_config=EXECUTION_CONFIG
     )
 
-    post_dbt_task = EmptyOperator(task_id="post_dbt_task")
-
-    # hello >> generation >> 
-    generation >> ingestion >> transformation >>  dbt_stage_external_sources >> dbt_run >> post_dbt_task 
-    #create_external_table >> 
-    
+    ingestion >> transformation >>  dbt_stage_external_sources >> dbt_run
+   
 
 emr_analytics_pipeline_dag()
