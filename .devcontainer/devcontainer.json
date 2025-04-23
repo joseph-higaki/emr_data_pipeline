@@ -20,8 +20,8 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install --user -r .devcontainer/requirements.txt",
+	// Use 'postCreateCommand' to install project dependencies including dev tools
+	"postCreateCommand": "pip install --user -e '.[dev]' && pip install --user -r .devcontainer/requirements.txt",
 
 	// Load environment variables from the .env file in the workspace 
 	"postStartCommand": ". /workspaces/emr_data_pipeline/.devcontainer/postStartCommand.sh",

@@ -1,29 +1,15 @@
 FROM python:3.11-slim
 
-# Install necessary packages
-RUN pip install --no-cache-dir \
-    google-cloud-storage \
-    pandas \
-    pyarrow \
-    gcsfs 
-    # pytest
-
-# Setup working directory
-# mkdir -p /app
 WORKDIR /app
 
-# Copy ingestion script and utilities
-# Using paths relative to the project root (build context in docker-compose)
-COPY scripts/emr_transformation/*.py /app/
+# Copy project configuration files first to leverage Docker caching
+COPY pyproject.toml setup.py /app/
+
+# Install the package in development mode
+RUN pip install -e .
+
+# Copy the script to the container
+COPY scripts/emr_transformation/emr_transformation.py /app/
 COPY .gcp.auth/airflow-ingestion/google_credentials.json /app/credentials/google_credentials.json
-RUN mkdir -p /app/credentials
-
-# Credentials will be mounted at runtime via volume mount
-# No need to copy credentials in the Dockerfile
-
-# Set environment variables
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/google_credentials.json
-ENV PYTHONPATH=/app
-
-# Set entrypoint to run the ingestion script
-#ENTRYPOINT ["python", "emr_ingestion.py"]
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/google_credentials.json 
+# No explicit ENTRYPOINT or CMD - these are provided by Airflow's DockerOperator

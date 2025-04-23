@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emr_data_pipeline"
+version = "0.1.0"
+description = "End-to-end EMR data pipeline including ingestion, transformation, and orchestration components"
+requires-python = ">=3.8"
+dependencies = [
+    "google-cloud-storage",
+    "pandas",
+    "pyarrow",
+    "requests",
+    "gcsfs",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scripts*"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+    "black",
+    "flake8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+markers = [
+    "unit: marks tests as unit tests",
+    "integration: marks tests as integration tests",
+]

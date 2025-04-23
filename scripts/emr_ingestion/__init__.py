@@ -1,0 +1,1 @@
+# EMR ingestion package initialization
