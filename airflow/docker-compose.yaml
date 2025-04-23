@@ -247,11 +247,7 @@ services:
       dockerfile: scripts/emr_ingestion/Dockerfile  
     image: emr_ingestion:latest    
     restart: "no"  # Don't restart automatically as it will be triggered by Airflow
-    volumes:    
-    - ${AIRFLOW_INGESTION_CREDENTIALS_FILEPATH}:/app/credentials/google_credentials.json
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/credentials/google_credentials.json 
-    
+
     # Command intentionally left empty as we'll use DockerOperator to run it
   emr_transformation:
     container_name: emr_transformation
@@ -260,11 +256,6 @@ services:
       dockerfile: scripts/emr_transformation/Dockerfile  
     image: emr_transformation:latest        
     restart: "no"  # Don't restart automatically as it will be triggered by Airflow
-    volumes:    
-    - ${AIRFLOW_INGESTION_CREDENTIALS_FILEPATH}:/app/credentials/google_credentials.json
-    environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /app/credentials/google_credentials.json 
-
 
 
   emr_generation:
