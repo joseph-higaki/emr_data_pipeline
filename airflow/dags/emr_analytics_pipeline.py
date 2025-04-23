@@ -72,11 +72,9 @@ def emr_analytics_pipeline_dag():
     dbt_stage_external_sources = DbtRunOperationLocalOperator(
                 task_id=f"dbt_stage_external_sources_task",
                 macro_name="stage_external_sources",
-                #project_config=PROJECT_CONFIG,
                 profile_config=PROFILE_CONFIG,
                 dbt_executable_path=DBT_EXECUTABLE_PATH,
                 project_dir=PROJECT_DIR,
-                #profile_config=profile_config,
                 install_deps=True
             )
 
@@ -87,7 +85,7 @@ def emr_analytics_pipeline_dag():
         execution_config=EXECUTION_CONFIG
     )
 
-    ingestion >> transformation >>  dbt_stage_external_sources >> dbt_run
+    ingestion >> transformation >> dbt_stage_external_sources >> dbt_run
    
 
 emr_analytics_pipeline_dag()

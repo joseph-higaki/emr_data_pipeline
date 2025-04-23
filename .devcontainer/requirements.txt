@@ -1,3 +1,5 @@
+# Dependencies specific to development environment
+# but not required for the package itself
 dbt-core 
 dbt-bigquery
 apache-airflow
