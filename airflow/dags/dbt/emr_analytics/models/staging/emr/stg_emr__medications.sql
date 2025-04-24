@@ -7,7 +7,7 @@ source as (
 ),
 
 renamed as (
-    select
+    select        
         patient as patient_id,
         payer as payer_id,
         encounter as encounter_id,
@@ -26,5 +26,11 @@ renamed as (
         reasondescription as reason_description,
         ingested_at
     from source
+),
+with_surrogatee as(
+    select 
+        {{ dbt_utils.generate_surrogate_key(['encounter_id', 'medication_code', 'start_at', 'stop_at', 'base_cost', 'dispenses']) }} as patient_medication_id,
+        *
+    from renamed
 )
-select * from renamed
+select * from with_surrogatee

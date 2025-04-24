@@ -12,6 +12,9 @@ models:
               - dispenses
               - ingested_at
     columns:     
+      - name: patient_medication_id
+        description: Unique identifier for the medication record
+        data_type: string              
           
       - name: patient_id
         description: Identifier for the patient prescribed this medication
