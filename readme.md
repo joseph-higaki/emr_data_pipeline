@@ -202,7 +202,7 @@ emr_data_pipeline/
 The following enhancements are recommended as logical next steps for this project:
 
 - **Testing Enhancement**
-  - Implement unit and integration tests for ingestion and transformation scripts
+  - ~~Implement unit tests for ingestion and transformation scripts~~ ✅
 
 - **Cloud Deployment - Compute Engine**
   - Run Airflow (with dbt) and processing scripts in Google Cloud Compute Engine
