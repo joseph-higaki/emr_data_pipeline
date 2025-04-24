@@ -15,11 +15,11 @@ plan: generate-tfvars
 
 # Apply with auto-generated tfvars
 apply: generate-tfvars
-	@terraform apply
+	@terraform apply -auto-approve
 
 # Destroy with auto-generated tfvars
 destroy: generate-tfvars
-	@terraform destroy
+	@terraform destroy -auto-approve
 
 # Clean up generated files
 clean:
