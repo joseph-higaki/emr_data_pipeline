@@ -9,14 +9,21 @@ with
 source as (
 
     select * from {{ ref('stg_emr__conditions') }}
-
-    {% if is_incremental() %}
-
-    -- this filter will only be applied on an incremental run    
-    where ingested_at > (select coalesce(max(ingested_at), '1800-01-01') from {{ this }})
-
-    {% endif %}
-
+    {{ incremental_filter('ingested_at') }}    
+)
+, with_rn as (
+    select *,
+        row_number() over (
+            partition by encounter_id, condition_code
+            order by ingested_at desc
+        ) as rn
+    from source
+)
+, dedup as (
+    select 
+    {{ dbt_utils.star(from=ref('stg_emr__conditions')) }}
+    from with_rn
+    where rn = 1
 ),
 conditions as (
     select
@@ -36,7 +43,7 @@ conditions as (
         start_date,    
         stop_date,
         ingested_at
-    from source
+    from dedup
 ),
 patients as (
     select
